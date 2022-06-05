@@ -1,0 +1,38 @@
+// ===== Default Theme palette =====
+// Font sizes
+$o-root-font-size: 12px;
+$o-font-size-base: 13rem * (1px / $o-root-font-size);
+$o-line-height-base: 1.5; // This is BS default
+
+// Colors
+$o-community-color: #8186a4;
+$o-enterprise-color: #6e3d74;
+$o-enterprise-primary-color: #459ba2;
+
+$o-brand-odoo: $o-community-color;
+$o-brand-primary: $o-community-color;
+
+$o-brand-secondary: #f0eeee;
+$o-brand-lightsecondary: #e2e2e0;
+$o-gray-100: #f8f9fa; // This is BS default
+
+$o-main-color-muted: #a8a8a8;
+$o-main-text-color: #4c4c4c;
+
+$o-view-background-color: white;
+$o-shadow-color: #303030;
+
+$o-form-lightsecondary: #ccc;
+
+$o-list-footer-bg-color: #eee;
+$o-list-footer-font-weight: bold;
+
+$o-tooltip-background-color: black;
+$o-tooltip-color: white;
+$o-tooltip-arrow-color: black;
+$o-tooltip-text-color: #777777;
+$o-tooltip-title-text-color: #4c4c4c;
+
+.bg-beta {
+	background-color: $o-enterprise-color !important;
+}

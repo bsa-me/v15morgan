@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="session_report_view_tree" model="ir.ui.view">
+        <field name="name">session.report.view.tree</field>
+        <field name="model">event.track</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="course_id"/>
+                <field name="company_id"/>
+                <field name="term_id"/>
+                <field name="duration"/>
+                <field name="date"/>
+                <field name="day"/>
+                <field name="stage_id"/>
+                <field name="employee_id"/>
+                <field name="event_type_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="session_report_action" model="ir.actions.act_window">
+        <field name="name">Session Reports</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">event.track</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="session_report_view_tree"/>
+    </record>
+
+    <menuitem id="session_report_menu"
+              name="Session Reports"
+              parent="event.menu_reporting_events"
+              action="session_report_action"/>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="general_event_view_tree" model="ir.ui.view">
+        <field name="name">general.event.view.tree</field>
+        <field name="model">event.event</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="course_id"/>
+                <field name="event_type_id"/>
+                <field name="term_id"/>
+                <field name="company_id"/>
+                <field name="state"/>
+                <field name="date_begin"/>
+                <field name="date_end"/>
+                <field name="class_room_id"/>
+                <field name="track_count"/>
+                <field name="seats_reserved"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="general_event_action" model="ir.actions.act_window">
+        <field name="name">General Event</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">event.event</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="general_event_view_tree"/>
+    </record>
+
+    <menuitem id="general_event_menu"
+              name="General Event"
+              parent="event.menu_reporting_events"
+              action="general_event_action"/>
+</odoo>

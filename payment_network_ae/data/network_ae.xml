@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="payment_acquirer_networkae" model="payment.acquirer">
+            <field name="name">Network International Payment Solution</field>
+            <field name="image_128" type="base64" file="payment_network_ae/static/description/icon.png"/>
+            <field name="provider">networkae</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="redirect_form_view_id" ref="redirect_form"/>
+           <field name="pre_msg"><![CDATA[
+<p>You will be redirected to Network AE Bank Secure page after clicking on the payment button.</p>]]></field> 
+            <field name='api_url'>https://api-gateway.sandbox.ngenius-payments.com</field>
+        </record>
+
+
+    <record id="payment_method_networkae" model="account.payment.method">
+        <field name="name">Network AE</field>
+        <field name="code">networkae</field>
+        <field name="payment_type">inbound</field>
+    </record>
+
+    </data>
+</odoo>

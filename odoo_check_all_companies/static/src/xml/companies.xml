@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+   <t t-name="check_all_companies.gift_icon">
+	   	<div class="gift_icon dropdown">
+           <a role="button" href="javascript:void(0)" class="gift_icon dropdown-toggle o-no-caret o-dropdown--narrow" title="Check all companies">
+             <i class="fa fa-circle-o-notch" aria-label="Check all companies" /> <span id="gift_notification_counter" class="o_notification_counter badge badge-pill"/>
+           </a>
+	    </div>
+   </t>
+</templates>

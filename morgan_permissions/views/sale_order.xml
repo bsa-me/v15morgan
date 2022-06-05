@@ -1,0 +1,30 @@
+<odoo>
+  <data>
+    <record id="sale_order_form_inherit" model="ir.ui.view">
+      <field name="name">sale.order.form.inherit</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form" />
+      <field name="arch" type="xml"> 
+        <data>
+
+      <!--<xpath expr="//button[@name='action_cancel']" position="attributes">
+        <attribute name="groups">morgan_permissions.master_accountant_group,morgan_permissions.normal_accountant_group,morgan_permissions.master_operation_group,morgan_permissions.normal_operation_group,permissions.master_operation_group,morgan_permissions.master_commercial_group,morgan_permissions.business_manager_group,morgan_permissions.program_advisor_group,morgan_permissions.city_operations_group,morgan_permissions.ecommerce_group</attribute>
+      </xpath>
+
+      <xpath expr="//button[@name='action_lock']" position="attributes">
+        <attribute name="groups">morgan_permissions.master_accountant_group,morgan_permissions.normal_accountant_group,morgan_permissions.master_operation_group,morgan_permissions.normal_operation_group,permissions.master_operation_group,morgan_permissions.master_commercial_group,morgan_permissions.business_manager_group,morgan_permissions.program_advisor_group,morgan_permissions.city_operations_group,morgan_permissions.ecommerce_group</attribute>
+      </xpath> -->
+
+      <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='date_order'][2]" position="attributes">
+        <attribute name="groups">morgan_permissions.master_accountant_group</attribute>
+      </xpath>
+          
+        </data>
+
+      </field>
+
+    </record>
+
+  </data>
+</odoo>
+

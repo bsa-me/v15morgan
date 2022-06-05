@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="custom_sign_view_event_form_inherit" model="ir.ui.view">
+        <field name="name">custom.sign.view.event.form.inherit</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <data>
+            <field name="date_tz" position="before">
+                            <field name="sign_tmp_id"/>
+                        </field>
+                        
+                            
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='event_ticket_ids']/tree[1]/field[@name='price']" position="after">
+              <field name='sign_tmp_id' />
+            </xpath>
+                            
+            </data>
+    </record>
+
+
+    <record id="custom_sign_view_event_registration_form_inherit" model="ir.ui.view">
+        <field name="name">custom.sign.view.event.registration.form.inherit</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_form"/>
+        <field name="arch" type="xml">
+
+            <field name="event_id" position="after">
+                <field name="sign_tmp_id"/>
+            </field>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,7 @@
+<odoo>
+    <report id="action_electronic_simplified_report_invoice" 
+        model="account.move" 
+        string="Simplified Tax Invoice" 
+        report_type="qweb-pdf"        
+        name="sh_electronic_invoice_qr_saudi.report_simplified_invoice_action" menu="True" />
+</odoo>

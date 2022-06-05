@@ -1,0 +1,26 @@
+<odoo>
+    <record model="base.automation" id="invoice_notification_automation">
+        <field name="name">Invoice Notification</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="state">code</field>
+        <field name="code">
+if record.state == 'posted' and record.move_type == 'out_invoice':
+  record.customer_invoice_notification()
+        </field>
+    </record>
+
+
+    <record model="base.automation" id="receipt_notification_automation">
+        <field name="name">Receipt Notification</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="trigger">on_create_or_write</field>
+
+        <field name="state">code</field>
+        <field name="code">
+if record.payment_type == 'inbound' and record.partner_type == 'customer' and record.state == 'posted':
+  record.customer_receipt_notification()
+        </field>
+    </record>
+
+</odoo>

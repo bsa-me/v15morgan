@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_select_companies_form" model="ir.ui.view">
+            <field name="name">select.companies.wizard.form</field>
+            <field name="model">select.companies.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Select Companies">
+                    <field name='allowed_companies' invisible='1'/>
+                    <group>
+                        <field name='company_ids' nolabel='1' options="{'no_create':True}" domain="[('id','in',allowed_companies)]">
+                            <tree>
+                                <field name='name'/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="open_companies_url" string="Go" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_select_companies" model="ir.actions.act_window">
+            <field name="name">Select Companies</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">select.companies.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="event_view_form_inherit" model="ir.ui.view">
+            <field name="name">event.form</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='date_tz']" position="after">
+                    <field name="level_id" />
+                    <field name="country_group_ids"  widget="many2many_tags"/>
+                </xpath>
+
+                <xpath expr="//field[@name='event_ticket_ids']" position="inside">
+                    <tree string="Tickets" editable="bottom">
+                    <field name="name"/>
+                    <field name="product_id" context="{'default_detailed_type': 'event'}" optional="hide" options="{'no_create':true,'no_open':true}"/>
+                    <field name="mapped_item_ids" widget="many2many_tags" optional="hide" options="{'no_create': True, 'no_open':True, 'no_quick_create': True}"/>
+                    <field name="origin_ticket_id" groups="base.group_no_one" optional="hide"/>
+                    <field name="course_ticket_ids" widget="many2many_tags" options="{'no_create': True, 'no_open':True, 'no_quick_create': True}"/>
+                    <field name="tax_ids" widget="many2many_tags" optional="hide" options="{'no_create': True, 'no_open':True, 'no_quick_create': True}"/>
+                    <field name="amount_taxed" optional="hide"/>
+                    <field name="description" optional="hide"/>
+                    <field name="ticket_company_id" optional="show"/>
+                    <field name="price" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                    <field name="country_group_ids"  widget="many2many_tags" optional="show"/>
+                    <field name="company_currency"/>
+                    <field name="start_sale_datetime" optional="show" string="Sales Start"/>
+                    <field name="end_sale_datetime" optional="show" string="Sales End"/>
+                    <field name="seats_max" sum="Total" width="105px" string="Maximum"/>
+                    <field name="seats_reserved" sum="Total" width="105px" string="Confirmed"/>
+                    <field name="seats_unconfirmed" sum="Total" width="110px" string="Unconfirmed"/>
+                    </tree>
+                </xpath>
+                
+            </field>
+
+        </record>
+
+</odoo>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- res.config.settings -->
+		<record model="ir.ui.view" id="view_account_res_config_settings_inherited">
+			<field name="name">view.account.res.config.settings.inherited</field>
+			<field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="account.res_config_settings_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//div[hasclass('settings')]/div[@data-key='account']/div[4]"
+					position="after">
+					<!-- <div>
+						<group>
+							<group>
+								<field name="send_statement" />
+								<field name="period" attrs="{'invisible':[('send_statement','!=',True)]}" />
+								<field name="statement_days" attrs="{'invisible':[('send_statement','!=',True)]}" />
+							</group>
+							<group>
+								<field name="send_overdue_statement" />
+								<field name="filter_statement" widget="radio"/>
+								<field name="overdue_days"
+									attrs="{'invisible':[('send_overdue_statement','!=',True)]}" />
+							</group>
+						</group>
+					</div> -->
+					<div class="row mt16 o_settings_container">
+						<div class="col-12 col-lg-6 o_setting_box">
+							<div class="o_setting_left_pane">
+								<field name="send_statement"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<label for="send_statement"/>
+								<label for="period"/>
+								<label for="statement_days"/>
+								<group>
+									<field name="period" attrs="{'invisible':[('send_statement','!=',True)]}" />
+									<field name="statement_days" attrs="{'invisible':[('send_statement','!=',True)]}" />
+								</group>
+								
+							</div>
+						</div> 
+						<div class="col-12 col-lg-6 o_setting_box">
+							<div class="o_setting_left_pane">
+								<field name="send_overdue_statement"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<label for="send_overdue_statement"/>
+								<label for="filter_statement"/>
+								<label for="overdue_days"/>
+								<group>
+									<field name="filter_statement" widget="radio"/>
+									<field name="overdue_days"
+									attrs="{'invisible':[('send_overdue_statement','!=',True)]}" />
+								</group>
+								
+							</div>
+						</div> 
+					</div>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

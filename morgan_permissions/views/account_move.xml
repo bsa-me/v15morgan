@@ -1,0 +1,97 @@
+<odoo>
+  <data>
+    <record id="account_move_form_inherit" model="ir.ui.view">
+      <field name="name">account.move.form.inherit</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form" />
+      <field name="arch" type="xml"> 
+      <data>
+
+        <xpath expr="//field[@name='invoice_date']" position="attributes">
+          <attribute name="groups">morgan_permissions.master_accountant_group</attribute>
+        </xpath>
+
+      <xpath expr="//button[@name='button_draft']" position="attributes">
+        <attribute name="groups">morgan_permissions.master_accountant_group,morgan_permissions.super_user_group</attribute>
+      </xpath>
+
+      <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='date_order'][2]" position="attributes">
+        <attribute name="groups">morgan_permissions.master_accountant_group</attribute>
+      </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='price_subtotal']" position="after">
+          <field name="is_master_accountant" invisible='1'/>
+          <field name="is_normal_accountant" invisible='1'/>
+          <field name="is_master_operation" invisible='1'/>
+          <field name="is_normal_operation" invisible='1'/>
+          <field name="is_master_marketing" invisible='1'/>
+          <field name="is_normal_marketing" invisible='1'/>
+          <field name="is_master_commercial" invisible='1'/>
+          <field name="is_ro_staff" invisible='1'/>
+          <field name="is_head_of_hub" invisible='1'/>
+          <field name="is_business_manager" invisible='1'/>
+          <field name="is_program_advisor" invisible='1'/>
+          <field name="is_city_operations" invisible='1'/>
+          <field name="is_admin" invisible='1'/>
+          <field name="is_ecommerce" invisible='1'/>
+        </xpath>
+
+
+       <!-- <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='product_id']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_normal_accountant","=",True],["is_admin","=",True],["is_master_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False],["is_master_commercial","=",False],["is_head_of_hub","=",False],["is_business_manager","=",False],["is_program_advisor","=",False],["is_city_operations","=",False],["is_ecommerce","=",False]], "required": [["display_type","=",False]], "invisible": ["|","|",["is_master_marketing","=",True],["is_normal_marketing","=",True],["is_ro_staff","=",True]]}</attribute>
+        </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='name']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|","|","|","|","|","|","|","|",["is_normal_accountant","=",True],["is_master_operation","=",True],["is_master_commercial","=",True],["is_head_of_hub","=",True],["is_business_manager","=",True],["is_program_advisor","=",True],["is_city_operations","=",True],["is_admin","=",True],["is_ecommerce","=",True],["is_master_accountant","=",False]], "required": [["display_type","=",False]], "invisible": ["|","|",["is_master_marketing","=",True],["is_normal_marketing","=",True],["is_ro_staff","=",True]]}</attribute>
+        </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='quantity']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_normal_accountant","=",True],["is_admin","=",True],["is_master_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False],["is_master_commercial","=",False],["is_head_of_hub","=",False],["is_business_manager","=",False],["is_program_advisor","=",False],["is_city_operations","=",False],["is_ecommerce","=",False]], "required": [["display_type","=",False]], "invisible": ["|","|",["is_master_marketing","=",True],["is_normal_marketing","=",True],["is_ro_staff","=",True]]}</attribute>
+        </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='price_unit']" position="attributes">
+          <attribute name="attrs">{"readonly": [["is_normal_accountant","=",True],["is_master_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False]], "required": [["display_type","=",False]], "invisible": [["is_master_accountant","=",False],["is_normal_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False]]}</attribute>
+        </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='tax_ids']" position="attributes">
+          <attribute name="attrs">{"readonly": [["is_normal_accountant","=",True],["is_master_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False]], "required": [["display_type","=",False]], "invisible": [["is_master_accountant","=",False],["is_normal_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False]]}</attribute>
+        </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='price_subtotal']" position="attributes">
+          <attribute name="attrs">{"readonly": [["is_normal_accountant","=",True],["is_master_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False]], "required": [["display_type","=",False]], "invisible": [["is_master_accountant","=",False],["is_normal_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False]]}</attribute>
+        </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='analytic_account_id']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_normal_accountant","=",True],["is_admin","=",True],["is_master_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False],["is_master_commercial","=",False],["is_head_of_hub","=",False],["is_business_manager","=",False],["is_program_advisor","=",False],["is_city_operations","=",False],["is_ecommerce","=",False]], "required": [["display_type","=",False]], "invisible": ["|","|",["is_master_marketing","=",True],["is_normal_marketing","=",True],["is_ro_staff","=",True]]}</attribute>
+        </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='analytic_tag_ids']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_normal_accountant","=",True],["is_admin","=",True],["is_master_accountant","=",False],["is_master_operation","=",False],["is_normal_operation","=",False],["is_master_commercial","=",False],["is_head_of_hub","=",False],["is_business_manager","=",False],["is_program_advisor","=",False],["is_city_operations","=",False],["is_ecommerce","=",False]], "required": [["display_type","=",False]], "invisible": ["|","|",["is_master_marketing","=",True],["is_normal_marketing","=",True],["is_ro_staff","=",True]]}</attribute>
+        </xpath> -->
+
+    <!-- G super user
+    h master accountant
+    I normal acountant
+    J Master Operations
+    K Normal Operations
+    L Master Marketing
+    M Normal Marketing
+    N Master Commercial
+    O Ro Staff
+    P Head of Hub
+    Q Business Manager
+    R Program Advisor
+    S City Operations
+    T Admin
+    U E-commerce -->
+
+      </data>
+
+
+      </field>
+
+    </record>
+
+  </data>
+</odoo>
+

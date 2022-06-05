@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+       <template id="assets_backend" name="odoo_check_companies" inherit_id="web.assets_backend">
+           <xpath expr=".">
+               <script type="text/javascript" src="/odoo_check_all_companies/static/src/js/companies.js"/>
+           </xpath>
+       </template>
+   </data>
+</odoo>

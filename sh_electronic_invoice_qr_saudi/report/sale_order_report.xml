@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sh_electronic_invoice_qr_saudi.action_report_saleorder" model="ir.actions.report">
+        <field name="paperformat_id" ref="sh_electronic_invoice_qr_saudi.paperformat_custom_saudi" />
+    </record>
+    <template id = "inherit_report_sale_document" inherit_id = "report_saleorder_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+            <attribute name="t-call">sh_electronic_invoice_qr_saudi.sh_external_layout</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="class" add="d-none" separator=" "/>
+        </xpath>
+
+        <xpath expr="//div[hasclass('page')]" position="before">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+            <div class="row border" >
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center pt-1 pb-1  " style = "background:#DEDEDE;border: 1px solid #777777;">
+                    <h5 style="margin-bottom: 0px;font-weight: bold;font-size: 12px;">Tax Invoice / فاتورة ضريبية
+                    </h5>
+                </div>
+            </div>
+            <div class="row mt-2" >
+                <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 pl-0 pr-0">
+                    <table class="table table-bordered" style="font-size: 10px; ">
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Sale Number</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-esc="o.name"/>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">رقم البيع
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Date Order</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-esc="o.date_order"/>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">تاريخ الأمر
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Due Date</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.validity_date">
+                                    <t t-esc="o.validity_date"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">تاريخ الاستحقاق
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Payment Terms</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.payment_term_id.name">
+                                    <t t-esc="o.payment_term_id.name"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">شروط الدفع
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>                
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 d-flex justify-content-end text-right" >
+                    <div class="text-center" style="display: flex;justify-content: center;">
+                        <t t-if=" o.sh_qr_code">
+                            <img alt="QR Code" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.sh_qr_code, 80, 80)" style="text-align: center;" />
+                        </t> 
+                    </div>
+                </div>  
+            </div>
+           
+            <div class="row mt-2">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 pl-0 pr-2">
+                    <table class="table table-bordered" style="font-size: 10px;">
+                        <tr style="background:#DEDEDE;padding:1px">
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;border-right:0">Seller</th>
+                            <td style="text-align: center;padding: 2px 8px;border:1px solid #777777; border-left:0; border-right:0">                                
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px;border:1px solid #777777; border-left:0;">المورد
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Name</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.name">
+                                    <t t-esc="o.company_id.name"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px;border:1px solid #777777; border-left:0;">الاسم
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Building No</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.street">
+                                    <t t-esc="o.company_id.street"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">رقم المبنى
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Street Name</th>
+                            <t t-if="o.company_id.street2">
+                                <td t-esc="o.company_id.street2" style="text-align: center;padding: 2px 8px;"></td>
+                            </t>
+                            <t t-else="">
+                                <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;"></td>
+                            </t>
+                            
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">اسم الشارع
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">District</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.state_id.name">
+                                    <t t-esc="o.company_id.state_id.name"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الحي
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px;border:1px solid #777777;">City</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.city">
+                                    <t t-esc="o.company_id.city"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">المدينة
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Country</th>
+                            <td style="text-align: center;padding: 2px 8px;border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.country_id.name">
+                                    <t t-esc="o.company_id.country_id.name"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الدولة
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Postal Code</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.zip">
+                                    <t t-esc="o.company_id.zip"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الرمز البريدي
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Additional No</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.additional_no">
+                                    <t t-esc="o.company_id.additional_no"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الرقم الإضافي للعنوان
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Vat Number</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.vat">
+                                    <t t-esc="o.company_id.vat"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الرقم الضريبي
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Other seller Id</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.company_id.other_seller_id">
+                                    <t t-esc="o.company_id.other_seller_id"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">معرف آخر
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 pl-2 pr-0">
+                    <table class="table table-bordered" style="font-size: 10px;">
+                        <tr style="background:#DEDEDE;padding:1px">
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;border-right:0">Buyer</th>
+                            <td style="text-align: center;padding: 2px 8px;border:1px solid #777777; border-left:0; border-right:0">                                
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px;border:1px solid #777777; border-left:0;">العميل
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Name</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.name">
+                                    <t t-esc="o.partner_id.name"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px;border:1px solid #777777; border-left:0;">الاسم
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Building No</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.street">
+                                    <t t-esc="o.partner_id.street"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">رقم المبنى
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Street Name</th>
+                            <t t-if="o.partner_id.street2">
+                                <td t-esc="o.partner_id.street2" style="text-align: center;padding: 2px 8px;"></td>
+                            </t>
+                            <t t-else="">
+                                <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;"></td>
+                            </t>
+                            
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">اسم الشارع
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">District</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.state_id.name">
+                                    <t t-esc="o.partner_id.state_id.name"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الحي
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px;border:1px solid #777777;">City</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.city">
+                                    <t t-esc="o.partner_id.city"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">المدينة
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Country</th>
+                            <td style="text-align: center;padding: 2px 8px;border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.country_id.name">
+                                    <t t-esc="o.partner_id.country_id.name"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الدولة
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Postal Code</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.zip">
+                                    <t t-esc="o.partner_id.zip"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الرمز البريدي
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Additional No</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.additional_no">
+                                    <t t-esc="o.partner_id.additional_no"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الرقم الإضافي للعنوان
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Vat No</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.vat">
+                                    <t t-esc="o.partner_id.vat"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">الرقم الضريبي
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left;padding: 2px 8px; border:1px solid #777777;">Other seller Id</th>
+                            <td style="text-align: center;padding: 2px 8px; border:1px solid #777777; border-left:0;">
+                                <t t-if="o.partner_id.other_seller_id">
+                                    <t t-esc="o.partner_id.other_seller_id"/>
+                                </t>
+                            </td>
+                            <td style="text-align: right;padding: 2px 8px; border:1px solid #777777; border-left:0;">معرف آخر
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style = "background:#DEDEDE; border: 1px solid #777777; padding:0px 10px;">
+                    <span style="margin-bottom: 1px;font-weight: bold;font-size: 12px; text-align:left;">Line Items
+                    </span>
+                    <span style="margin-bottom: 1px;font-weight: bold;font-size: 12px; text-align:left;float:right">توصيف السلعة او الخدمة
+                    </span>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pl-0 pr-0">
+                    <table class="table table-bordered" style="font-size: 10px;">
+                        <tr style = "background:#DEDEDE;">
+                            <th scope="row" style = "border:1px solid #777777;  text-align: center;">Nature of goods or service<br/>
+                                تفاصيل السلع او الخدمات
+
+                            </th>
+                            <th scope="row" style = "border:1px solid #777777;text-align: center;">Unit Price<br/>
+                                سعر الوحدة
+                            </th>
+                            <th scope="row" style = "border:1px solid #777777;text-align: center;">Quantity<br/>
+                                الكمية
+                            </th>
+                            <th scope="row" style = "border:1px solid #777777;text-align: center;">Taxable Amount<br/>
+                                المبلغ الخاضع للضريبة
+                            </th>
+
+                            <th scope="row" style = "border:1px solid #777777;text-align: center;">Discount<br/>
+                                خصومات
+                            </th>
+                            <th scope="row" style = "border:1px solid #777777;text-align: center;">Tax Rate<br/>
+                                نسبة الضريبة
+                            </th>
+                            <th scope="row" style = "border:1px solid #777777;text-align: center;">Tax Amount<br/>
+                                مبلغ الضريبة
+                            </th>
+                            <th scope="row" style = "border:1px solid #777777;text-align: center;" >Item Subtotal<br />(Including VAT)<br />
+                                 المجموع شامل ضريبة القيمة المضافة
+                            </th>
+                        </tr>
+
+                        <t t-set="lines" t-value="o.order_line.sorted(key=lambda l: (-l.sequence, l.name, -l.id), reverse=True)"/>
+
+                        <t t-foreach="lines" t-as="line">
+
+                            <tr>
+                                <td  style="padding: 2px 10px;border:1px solid #777777">
+                                    <span t-esc="line.product_id.name"/>
+                                    <br/>
+                                    <t t-if="o.add_product_arabic_name">
+                                        <span t-esc="line.product_id.sh_arabic_name"/>
+                                    </t>
+                                </td>
+
+                                <td t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class="text-center" style="padding: 2px 2px;border:1px solid #777777"> 
+
+                                </td>
+
+                                <td class="text-center" style="padding: 2px 2px;border:1px solid #777777">
+                                    <t t-esc="line.product_uom_qty"/><![CDATA[&nbsp;]]><t t-if="line.product_uom">
+                                        <t t-esc="line.product_uom.name"/>
+                                    </t>
+                                </td>
+
+                                <td t-esc="line.taxable_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class="text-center" style="padding: 2px 2px;border:1px solid #777777">
+
+                                </td>
+
+                                <td class="text-center" style="padding: 2px 2px;border:1px solid #777777">
+                                    <t t-esc="line.discount"/> %
+                                </td>
+                                
+                                <td class="text-center" style="padding: 2px 2px;border:1px solid #777777">                                
+                                   <t t-if="line.tax_id">
+                                    <t t-foreach="line.tax_id" t-as="tax">
+                                        <t t-esc="tax.amount"/> %
+                                    </t>                                    
+                                    </t>
+                                </td>
+                                <td t-esc="line.price_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class="text-center" style="padding: 2px 2px;border:1px solid #777777">
+
+                                </td>
+
+                                <td t-esc="line.price_subtotal + line.price_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class="text-right" style="padding: 2px 8px;border:1px solid #777777">
+
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </div>
+            <div class="row mt-2 border" style="page-break-inside: avoid;">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style = "background:#DEDEDE; border: 1px solid #777777; padding:0px 10px;">
+                    <span style="margin-bottom: 1px;font-weight: bold;font-size: 12px;">Total Amounts
+                    </span>
+                    <span style="margin-bottom: 1px;font-weight: bold;font-size: 12px;float:right">المبلغ الإجمالي
+                    </span> 
+                </div>
+            </div>
+
+            <div class="row" >
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pl-0 pr-0">
+                    <table class="table table-bordered" style="font-size: 10px;">                        
+                        <tr>
+                            <th scope="row" style="text-align: Center;padding: 2px 10px;  border: 1px solid #777777; text-align:left;">Total (Excluding VAT)</th>
+                            <td dir="rtl" style="text-align: Center;padding: 2px 2px;  border: 1px solid #777777; border-left:0;">الإجمالي  (غير شاملة ضريبة القيمة المضافة)
+                            </td>
+                            <td style="text-align: Center;padding: 2px 2px;  border: 1px solid #777777; text-align:right; border-left:0;" t-esc = "o.amount_untaxed + (o.amount_undiscounted - o.amount_untaxed)" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class = "border-left-0">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: Center;padding: 2px 10px; text-align:left; border: 1px solid #777777;">Discount</th>
+                            <td style="text-align: Center;padding: 2px 2px; border: 1px solid #777777; border-left:0;">مجموع الخصومات
+                            </td>
+                            <td style="text-align: Center;padding: 2px 2px; border: 1px solid #777777; border-left:0; text-align:right;" t-esc = "o.amount_undiscounted - o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class = "border-left-0">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: Center;padding: 2px 10px; border: 1px solid #777777; text-align:left;">Total Taxable Amount(Excluding VAT)</th>
+                            <td dir="rtl" style="text-align: Center;padding: 2px 2px; border: 1px solid #777777; border-left:0;">إجمالي المبلغ الخاضع للضريبة (غير شاملة ضريبة القيمة المضافة)
+                            </td>
+                            <td style="text-align: Center;padding: 2px 2px; border: 1px solid #777777; border-left:0; text-align:right;" t-esc = "o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class = "border-left-0">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: Center;padding: 2px 10px; text-align:left; border: 1px solid #777777;">Total VAT</th>
+                            <td style="text-align: Center;padding: 2px 2px; border: 1px solid #777777; border-left:0;">
+                                مجموع ضريبة القيمة المضافة
+                            </td>
+                            <td style="text-align: Center;padding: 2px 2px; border: 1px solid #777777; border-left:0; text-align:right;" t-esc = "o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class = "border-left-0">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: Center;padding: 2px 10px; text-align:left; border: 1px solid #777777;">Total Amount Due</th>
+                            <td style="text-align: Center;padding: 2px 2px; border: 1px solid #777777; border-left:0;">
+                                إجمالي المبلغ المستحق
+                            </td>
+                            <td style="text-align: Center;padding: 2px 2px; border: 1px solid #777777; border-left:0; text-align:right;" t-esc = "o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class = "border-left-0">
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row mt-1 border" style = "font-size:10px margin-top:2px; page-break-inside: avoid; ">   
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style = "background:#DEDEDE; border:1px solid #777777; ">   
+                    <h5 style="margin-bottom: 0px;font-weight: bold;font-size: 12px; padding:0px 10px; text-transform:capitalized;">Invoiced Amount
+                    </h5> 
+                </div>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style=" border:1px solid #777777;border-left:0px;" >
+                    <h5 style="margin-bottom: 0px;font-size: 12px; padding:2px 0px;"><t t-esc="o.amount_in_words"/>
+                    </h5> 
+                </div>
+            </div>
+            <div class="row mt-1 border" style = "font-size:10px  margin-bottom:5px; ">   
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="border:1px solid #777777;" >   
+                    <h5 style="margin-bottom: 0px;font-size: 12px;text-align: right;padding:2px 0px;"><t t-esc="o.amount_in_words_ar"/>
+                    </h5> 
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style = "background:#DEDEDE; border:1px solid #777777; border-left:0px;" >
+                    <h5 style="margin-bottom: 0px;font-weight: bold;font-size: 12px;text-align: right;padding:2px 0px;">المبلغ المفوتر
+                    </h5> 
+                </div>
+            </div>            
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_register_payment,access_register_payment,invoice_custom_reconciliation.model_register_payment,,1,1,1,1
+access_register_payment_line,access_register_payment_line,invoice_custom_reconciliation.model_register_payment_line,,1,1,1,1
+access_future_payment,access_future_payment,invoice_custom_reconciliation.model_morgan_future_payment,,1,1,1,1

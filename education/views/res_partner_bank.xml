@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record id="res_partner_bank_inherit_form" model="ir.ui.view">
+             <field name="name">res.partner.bank.form.inherit</field>
+             <field name="model">res.partner.bank</field>
+             <field name="inherit_id" ref="base.view_partner_bank_form" />
+             <field name="arch" type="xml">
+                <data>
+                  <xpath expr="//field[@name='acc_number']" position="after">
+                    <field name="iban"/>
+                    <field name="swift_code"/>
+                  </xpath>
+                </data>
+
+             </field>
+        </record>
+
+        <record id="res_partner_private_inherit_form" model="ir.ui.view">
+             <field name="name">res.partner.private.form.inherit</field>
+             <field name="model">res.partner</field>
+             <field name="inherit_id" ref="base.res_partner_view_form_private" />
+             <field name="arch" type="xml">
+              <data>
+              <xpath expr="//field[@name='bank_ids']//tree//field[@name='acc_number']" position="after">
+                <field name='swift_code' />
+                <field name='iban' />
+                <field name='bank_id' />
+                </xpath>
+              </data>
+
+             </field>
+        </record>
+        
+    </data>
+</odoo>

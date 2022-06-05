@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="website_menu_form_inherit" model="ir.ui.view">
+            <field name="name">website.menu.form.inherit</field>
+            <field name="model">website.menu</field>
+            <field name="inherit_id" ref="website.website_menus_form_view" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='group_ids']" position="after">
+                    <field name="country_group_ids"  widget="many2many_tags"/>
+                </xpath>
+                
+            </field>
+
+        </record>
+
+<template id="submenu" inherit_id="website.submenu">
+    <xpath expr="//t[@t-name='website.submenu']" position="replace">
+        <t name="Submenu" t-name="website.submenu">
+            <t t-set="country_code" t-value="request.session['geoip']['country_code']"/>
+            <t t-set="country" t-value="request.env['res.country'].search([('code','=',country_code)])"/>
+            <t t-set="show_dropdown" t-value="(submenu.is_mega_menu and submenu.is_visible) or submenu.child_id.filtered(lambda menu: menu.is_visible)"/>
+            <t t-if="country">
+            <t t-set="show_dropdown" t-value="(submenu.is_mega_menu and submenu.is_visible and country.id in submenu.country_group_ids.mapped('country_ids').ids) or submenu.child_id.filtered(lambda menu: menu.is_visible and country.id in menu.country_group_ids.mapped('country_ids').ids)"/>
+            </t>
+            <li t-if="submenu.is_visible and not (submenu.child_id or submenu.is_mega_menu)" t-attf-class="#{item_class or ''}">
+                <a t-att-href="submenu.clean_url()" t-attf-class="#{link_class or ''} #{'active' if submenu.clean_url() and unslug_url(request.httprequest.path) == unslug_url(submenu.clean_url()) else ''}" role="menuitem" t-ignore="true" t-att-target="'_blank' if submenu.new_window else None">
+                    <span t-field="submenu.name"/>
+                </a>
+            </li>
+            <li t-elif="show_dropdown" t-attf-class="#{item_class or ''} dropdown #{         (submenu.clean_url() and submenu.clean_url() != '/' and any(request.httprequest.path == child.url for child in submenu.child_id if child.url) or          (submenu.clean_url() and request.httprequest.path == submenu.clean_url())) and 'active'         } #{submenu.is_mega_menu and 'position-static'}">
+                <a t-attf-class="#{link_class or ''} dropdown-toggle #{submenu.is_mega_menu and 'o_mega_menu_toggle'}" data-toggle="dropdown" href="#">
+                    <span t-field="submenu.name"/>
+                </a>
+                <div t-if="submenu.is_mega_menu" t-attf-class="dropdown-menu o_mega_menu #{submenu.mega_menu_classes}" data-name="Mega Menu" t-field="submenu.mega_menu_content"/>
+                <ul t-else="" class="dropdown-menu" role="menu">
+                    <t t-foreach="submenu.child_id.filtered(lambda menu: country.id in menu.country_group_ids.mapped('country_ids').ids)" t-as="submenu">
+                        <t t-call="website.submenu">
+                            <t t-set="item_class" t-value="None"/>
+                            <t t-set="link_class" t-valuef="dropdown-item"/>
+                        </t>
+                    </t>
+                </ul>
+            </li>
+        </t>
+    </xpath>
+</template>
+
+</odoo>

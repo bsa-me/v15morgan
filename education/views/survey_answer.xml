@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="survey_answer_view_tree_inhrit" model="ir.ui.view">
+            <field name="name">survey.user_input.tree</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_view_tree" />
+            <field name="arch" type="xml">
+                <field name='quizz_score' position="attributes">
+                    <attribute name='avg'>Total</attribute>
+                </field>
+
+            </field>
+        </record>
+    </data>
+</odoo>

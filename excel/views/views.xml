@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="excel.list">
+      <field name="name">excel list</field>
+      <field name="model">excel.excel</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+
+
+
+
+
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="excel.action_window">
+      <field name="name">excel window</field>
+      <field name="res_model">excel.excel</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="excel.action_server">
+      <field name="name">excel server</field>
+      <field name="model_id" ref="model_excel_excel"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="excel" id="excel.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="excel.menu_1" parent="excel.menu_root"/>
+    <menuitem name="Menu 2" id="excel.menu_2" parent="excel.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="excel.menu_1_list" parent="excel.menu_1"
+              action="excel.action_window"/>
+    <menuitem name="Server to list" id="excel" parent="excel.menu_2"
+              action="excel.action_server"/>
+    -->
+  </data>
+</odoo>

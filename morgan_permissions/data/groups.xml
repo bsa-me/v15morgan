@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+
+    <record model="res.groups" id="super_user_group">
+      <field name="name">Super User</field>
+    </record>
+
+    <record model="res.groups" id="master_accountant_group">
+      <field name="name">Master Accountant</field>
+    </record>
+
+    <record model="res.groups" id="normal_accountant_group">
+      <field name="name">Normal Accountant</field>
+    </record>
+
+    <record model="res.groups" id="master_operation_group">
+      <field name="name">Master Operations</field>
+    </record>
+
+    <record model="res.groups" id="normal_operation_group">
+      <field name="name">Normal Operations</field>
+    </record>
+
+    <record model="res.groups" id="master_marketing_group">
+      <field name="name">Master Marketing</field>
+    </record>
+
+    <record model="res.groups" id="normal_marketing_group">
+      <field name="name">Normal Marketing</field>
+    </record>
+
+    <record model="res.groups" id="master_commercial_group">
+      <field name="name">Master Commercial</field>
+    </record>
+
+    <record model="res.groups" id="ro_staff_group">
+      <field name="name">Ro Staff</field>
+    </record>
+
+    <record model="res.groups" id="head_of_hub_group">
+      <field name="name">Head of Hub</field>
+    </record>
+
+    <record model="res.groups" id="business_manager_group">
+      <field name="name">Business Manager</field>
+    </record>
+
+    <record model="res.groups" id="program_advisor_group">
+      <field name="name">Program Advisor</field>
+    </record>
+
+    <record model="res.groups" id="city_operations_group">
+      <field name="name">City Operations</field>
+    </record>
+
+
+
+    <record model="res.groups" id="admin_group">
+      <field name="name">Admin</field>
+    </record>
+
+    <record model="res.groups" id="ecommerce_group">
+      <field name="name">Ecommerce</field>
+    </record>
+
+    
+  </data>
+</odoo>

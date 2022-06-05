@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add themes in editor -->
+    <template id="email_designer_snippets" inherit_id="mass_mailing.email_designer_snippets">
+        <xpath expr="//div[@id='email_designer_themes']" position="inside">
+            <div data-name="empty_template"
+                 data-img="/morgan_email_templates/static/src/img/empty_thumb"
+                 data-images-info='{"logo": {"format": "png"}, "all": {"module": "morgan_email_templates"}}'>
+                <t t-call="morgan_email_templates.theme_empty_template"/>
+            </div>
+        </xpath>
+    </template>
+
+    
+    
+    <!-- Theme "Empty" default template -->
+    <template id="theme_empty_template">
+        <div class="o_mail_block_footer_separator">
+            <div class="o_mail_snippet_general"></div>
+        </div>
+    </template>
+    
+    <template id="s_mail_block_header_two_logo" name="Two Logo">
+	    <div class="o_mail_block_header_social">
+	        <div class="o_mail_snippet_general">
+	            <table align="center" cellspacing="0" cellpadding="0" border="0" class="o_mail_table_styles">
+	                <tr>
+	                    <td width="30%"  class="o_mail_logo_container o_mail_h_padding o_mail_v_padding">
+	                        &amp;nbsp;
+	                        <a t-att-href="(company_id.website) or '#'" style="text-decoration:none;float:none;">
+	                             <img border="0" src="/mass_mailing/static/src/img/theme_basic/s_default_image_logo.png" style="height:auto;max-width:400px;" alt="Your Logo" />
+	                        </a>
+	                        &amp;nbsp;
+	                    </td>
+	                    <td width="40%">&amp;nbsp;</td>
+	                    <td width="30%"  class="o_mail_logo_container o_mail_h_padding o_mail_v_padding">
+	                        &amp;nbsp;
+	                        <a t-att-href="(company_id.website) or '#'" style="text-decoration:none;float:none;">
+	                             <img border="0" src="/mass_mailing/static/src/img/theme_basic/s_default_image_logo.png" style="height:auto;max-width:400px;" alt="Your Logo" />
+	                        </a>
+	                        &amp;nbsp;
+	                    </td>
+	                </tr>
+	            </table>
+	        </div>
+	    </div>
+    </template>
+    
+    <template id="email_designer_snippets" inherit_id="mass_mailing.email_designer_snippets">
+	    <xpath expr="//div[@id='email_designer_header_elements']" position="inside">
+		    <t t-snippet="morgan_email_templates.s_mail_block_header_two_logo" t-thumbnail="/morgan_email_templates/static/src/img/block_header_two_logo.png"/>
+	    </xpath>
+    </template>
+
+    
+</odoo>

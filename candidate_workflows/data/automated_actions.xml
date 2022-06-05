@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="send_mail_session_change_date" model="base.automation">
+		<field name="name">send email onchange of session date</field>
+		<field name="model_id" ref="education.model_event_track" />
+		<field name="trigger">on_write</field>
+		<field name="active">True</field>
+		<field name="state">code</field>
+		<field name="trigger_field_ids" eval="[Command.link(ref('website_event_track.field_event_track__date'))]"/>
+		<field name="code">
+template = env.ref('candidate_workflows.session_change_date_template')
+registrations = env['event.registration'].sudo().search([('event_id','=',record.event_id.id)])
+for reg in registrations:
+  template.write({'email_to': reg.email or reg.partner_id.email})
+  template.send_mail(record.ids[0], force_send=True)
+		</field>
+	</record>
+
+	<record id="congratulation_attempt_action" model="base.automation">
+		<field name="name">Congratulation email</field>
+		<field name="model_id" ref="education.model_attempt" />
+		<field name="trigger">on_write</field>
+		<field name="active">True</field>
+		<field name="state">code</field>
+		<field name="trigger_field_ids" eval="[Command.link(ref('education.field_attempt__passing_status'))]"/>
+		<field name="code">
+template = env.ref('candidate_workflows.congratulation_template')
+if record.passing_status == 'passed':
+   template.send_mail(record.ids[0],force_send=True)
+elif record.passing_status == 'failed':
+   template = env.ref('candidate_workflows.failed_attempt_template')
+   template.send_mail(record.ids[0],force_send=True)
+		</field>
+	</record>
+    
+</odoo>

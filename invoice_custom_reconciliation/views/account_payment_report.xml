@@ -1,0 +1,112 @@
+<odoo>
+    <data>
+       
+
+
+<template id="report_custom_payment_receipt" inherit_id="account.report_payment_receipt_document">
+    <xpath expr="//div[@class='page']" position="replace">
+<div class="page">
+
+                <br/><br/>
+               <span t-if="o.payment_type == 'outbound'"> <h3><strong><span t-field="o.company_id.refund_name"/> <span t-field="o.name"/></strong></h3></span>
+
+               <span t-if="o.payment_type == 'inbound'"> <h3><strong><span t-field="o.company_id.receipt_name"/> <span t-field="o.name"/></strong></h3></span>
+
+                <div class="row mt64">
+                    <div class="col-6" t-if="o.payment_date">
+                        <strong>Date: </strong> <span t-field="o.payment_date"/>
+                    </div>
+
+
+                    
+                    <div class="col-6" t-if="o.date_cleared">
+                        <strong>Date Cleared: </strong><span t-field="o.date_cleared"/>
+                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-6" t-if="o.partner_type">
+                        <t t-if="o.partner_type == 'customer'">
+                            <strong>Customer: </strong>
+                        </t>
+                        <t t-if="o.partner_type == 'supplier'">
+                            <strong>Vendor: </strong>
+                        </t><span t-field="o.partner_id"/>
+                    </div>
+                    
+                     <div class="col-6" t-if="o.payment_ref">
+                        <strong>Payment Reference: </strong><span t-field="o.payment_ref"/>
+                    </div>
+
+                </div>
+                
+                                          
+                  <div class="row">
+
+                     <div class="col-6" t-if="o.payment_mode">
+                        <strong>Payment Mode: </strong><span t-field="o.payment_mode"/>
+                    </div>
+                      
+                     <div class="col-6" t-if="o.comment">
+                        <strong>Comment: </strong><span t-field="o.comment"/>
+                    </div>
+                    
+                  </div>
+                
+                <div class="row mb64">
+                    <div class="col-6" t-if="o.amount">
+                        <strong>Payment Amount: </strong><span t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                     </div>
+
+                    <div class="col-6" t-if="o.amount">
+                        <strong>Local Payment Amount: </strong><span t-field="o.local_payment_amount" t-options="{'widget': 'monetary', 'display_currency': o.local_currency_id}"/>
+                     </div>
+                     
+                </div>
+
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th><span>Invoice Date</span></th>
+                            <th><span>Invoice Number</span></th>
+                            <th><span>Reference</span></th>
+                            <th class="text-right"><span>Original Amount</span></th>
+                            <th class="text-right"><span>Allocated Amount</span></th>
+                            <th class="text-right"><span>Amount Due</span></th>
+                            <!--<th class="text-right"><span>Amount Paid</span></th>
+                            <th class="text-right"><span>Balance</span></th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.invoice_ids" t-as="inv">
+                            <td><span t-field="inv.invoice_date"/></td>
+                            <td><span t-field="inv.name"/></td>
+                            <td><span t-field="inv.ref"/></td>
+                            <td class="text-right"><span t-field="inv.amount_total"/></td>
+                            <td class="text-right">
+                               <!-- <t t-foreach="inv.register_payment_line_ids" t-as="r">
+                                    <t t-if="r.payment_id.id == o.id">
+                                        <span t-field="r.allocated_amount" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/>
+                                    </t> 
+                            </t> -->
+                            <t t-if="inv.register_payment_line_ids.filtered(lambda r: r.payment_registration_id.payment_id.id == o.id)">
+                                   <span t-esc="sum(inv.register_payment_line_ids.filtered(lambda r: r.payment_registration_id.payment_id.id == o.id)[-1].mapped('allocated_amount'))" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/>
+                            </t>
+                            <t t-else="">
+                              <span t-esc="o.amount" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/>
+                            </t>
+                            </td>
+                            <td class="text-right"><span t-field="inv.amount_residual"/></td>
+                            <!--<td class="text-right"><span t-esc="o._get_invoice_payment_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
+                            <td class="text-right"><span t-field="inv.amount_residual"/></td>-->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+  </xpath>
+        </template>
+
+          
+
+
+    </data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="account_move_inherit_view_form" model="ir.ui.view">
+        <field name="name">account.move.inherit.view.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name = "ref" position = "after">
+                <field name="sh_qr_code" invisible="1"/>
+                <field name="sh_qr_code_img" widget="image" class="oe_avatar float-left" attrs="{'invisible': [('move_type', 'in', ['in_invoice','in_refund'])]}"/>
+                <field name="amount_in_words" invisible="1"/>
+                <field name="amount_in_words_ar" invisible="1" />
+            </field>
+            <xpath expr="//form/sheet/notebook/page/field[@name='invoice_line_ids']/tree/field[@name='move_name']" position="after">
+                <field name="line_tax_Amount" invisible="1" />
+            </xpath>    
+        </field>        
+    </record>
+</odoo>

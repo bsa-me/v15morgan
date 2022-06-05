@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="crm_quotation_to_opportunity_form" model="ir.ui.view">
+            <field name="name">crm.quotation.partner.form</field>
+            <field name="model">crm.quotation.partner</field>
+            <field name="inherit_id" ref="sale_crm.crm_quotation_partner_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="event_id" invisible='1'/>
+                    <field name="event_ticket_id" domain="[('event_id', '=', event_id),('product_id','=',%(event_sale.product_product_event)d)]" attrs="{'invisible': [('event_id', '=', False)],'required': [('event_id', '!=', False)]}" options="{'no_open': True, 'no_create': True}"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>
+

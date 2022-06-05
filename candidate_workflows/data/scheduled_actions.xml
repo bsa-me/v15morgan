@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="registration_confirm_email" model="ir.cron">
+		<field name="name">send registration confirm email</field>
+		<field name="model_id" ref="event.model_event_registration" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+template = env.ref('event.event_subscription')
+invoices = env['account.move'].sudo().search([
+  ('move_type','=','out_invoice'),
+  ('invoice_line_ids.product_id.detailed_type','=','event'),
+  ('state','=','posted')])
+  
+invoices = invoices.filtered(lambda inv: inv.invoice_date == datetime.datetime.today().date() - datetime.timedelta(days=1))
+for inv in invoices:
+  registrations = inv.invoice_line_ids.mapped('sale_line_ids').mapped('registration_ids').filtered(lambda r: r.state in ['open','done'])
+  if registrations:
+    for reg in registrations:
+      template.send_mail(reg.ids[0], force_send=True)
+		
+		</field>
+	</record>
+
+	<record id="importance_of_attendance_cron" model="ir.cron">
+		<field name="name">Importance of attendance Email</field>
+		<field name="model_id" ref="event.model_event_registration" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+registrations = []
+template = env.ref('candidate_workflows.attendance_importance')
+attendances = env['attendance'].sudo().search(['|',('session_id.mrm_id','=',False),('session_id.mrm_id','=',0),('attended','=',False),('session_id.date','&lt;',datetime.datetime.today())])
+for attendance in attendances:
+  other_attendance = env['attendance'].sudo().search([('registration_id','=',attendance.registration_id.id),('session_id','!=',attendance.session_id.id),('attended','=',False),('session_id.date','&lt;',datetime.datetime.today())],limit=1)
+  if other_attendance:
+    if other_attendance.registration_id.id not in registrations:
+      registrations.append(other_attendance.registration_id.id)
+      template.send_mail(other_attendance.registration_id.id,force_send=True)	
+		</field>
+	</record>
+
+	<record id="good_luck_cron" model="ir.cron">
+		<field name="name">Send good luck email on attempt</field>
+		<field name="model_id" ref="education.model_attempt" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+date = datetime.datetime.today().date() - datetime.timedelta(days=1)
+template = env.ref('candidate_workflows.good_luck_template')
+attempts = env['attempt'].sudo().search([('attempt_date','!=',False),('attempt_date','=',date)])
+for attempt in attempts:
+  template.send_mail(attempt.ids[0],force_send=True)
+		</field>
+	</record>
+	
+	<record id="result_attempt_cron" model="ir.cron">
+		<field name="name">Send result email of attempt</field>
+		<field name="model_id" ref="education.model_attempt" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+date = datetime.datetime.today().date()
+template = env.ref('candidate_workflows.result_attempt_template')
+attempts = env['attempt'].sudo().search([('expected_result_date','!=',False)])
+for attempt in attempts:
+  if (attempt.expected_result_date + datetime.timedelta(days=1)) == date: 
+    template.send_mail(attempt.ids[0],force_send=True)
+		</field>
+	</record>
+
+	<record id="welcome_after_payment_cron" model="ir.cron">
+		<field name="name">Send email to welcome student</field>
+		<field name="model_id" ref="education.model_account_payment" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+date = datetime.datetime.today().date() - datetime.timedelta(days=1)
+template = env.ref('candidate_workflows.welcome_after_payment_template')
+payments = env['account.payment'].sudo().search([('date','=',date),('partner_id','!=',False),('payment_type','=','inbound')])
+for payment in payments:
+  template.send_mail(payment.ids[0],force_send=True)
+		</field>
+	</record>
+
+	<record id="welcome_instructor_cron" model="ir.cron">
+		<field name="name">Send email to welcome instructor</field>
+		<field name="model_id" ref="education.model_hr_employee" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+date = datetime.datetime.today().date() - datetime.timedelta(days=1)
+template = env.ref('candidate_workflows.welcome_instructor_template')
+instructors = env['hr.employee'].sudo().search([('joining_date','=',date)])
+for instructor in instructors:
+  template.send_mail(instructor.ids[0],force_send=True)
+		</field>
+	</record>
+
+	<record id="notify_instructor_cron" model="ir.cron">
+		<field name="name">Send email to instructor for his session</field>
+		<field name="model_id" ref="education.model_event_track" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+date = datetime.datetime.today().date() - datetime.timedelta(days=2)
+template = env.ref('candidate_workflows.reminder_of_sessions')
+sessions = env['event.track'].sudo().search([('date','=',date)])
+for session in sessions:
+  template.send_mail(session.ids[0],force_send=True)
+		</field>
+	</record>
+	
+	<record id="instructor_payment_cron" model="ir.cron">
+		<field name="name">Instructor payment email</field>
+		<field name="model_id" ref="education.model_hr_employee" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+date = datetime.datetime.today().date() + datetime.timedelta(days=7)
+template = env.ref('candidate_workflows.payment_instructor_template')
+payslips = env['hr.payslip'].sudo().search([('state','=','paid')])
+for payslip in payslips:
+  if payslip.write_date.date() == date:
+    template.send_mail(payslip.employee_id.ids[0],force_send=True)
+		</field>
+	</record>
+
+	<record id="birthday_instructor_cron" model="ir.cron">
+		<field name="name">birthday instructor email</field>
+		<field name="model_id" ref="education.model_hr_employee" />
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="active">True</field>
+		<field name="code">
+date = datetime.datetime.today().date()
+template = env.ref('candidate_workflows.instructor_birthday_template')
+instructors = env['hr.employee'].sudo().search([('birthday','=',date)])
+for instructor in instructors:
+  template.send_mail(instructor.ids[0],force_send=True)
+		</field>
+	</record>
+
+	
+
+</odoo>

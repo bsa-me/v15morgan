@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <template id="blom_acquirer_button">
+            <!--<form t-if="acquirer" t-att-action="tx_url" method="post" target="_self">-->
+                <div>
+                <input type="hidden" name="data_set" t-att-data-action-url="tx_url" data-remove-me=""/>
+                <input type="hidden" name="access_key" t-att-value='access_key'/>
+                <input type="hidden" name="profile_id" t-att-value='profile_id'/>
+                <input type="hidden" name="transaction_uuid" t-att-value='transaction_uuid'/>
+                <input type="hidden" name="signed_date_time" t-att-value='signed_date_time'/>
+                <input type="hidden" name="locale" t-att-value='locale'/>
+                <input type="hidden" name="currency" t-att-value='currency'/>
+                <input type="hidden" name="transaction_type" t-att-value="transaction_type"/>
+                <input type="hidden" name="reference_number" t-att-value='reference_number'/>
+                <input type="hidden" name="signed_field_names" value="bill_to_address_line2,amount,access_key,profile_id,transaction_uuid,signed_field_names,unsigned_field_names,signed_date_time,locale,transaction_type,reference_number,currency"/>
+                <input type="hidden" name="unsigned_field_names" value="bill_to_surname,bill_to_forename,bill_to_address_country,bill_to_address_line1,bill_to_address_city,bill_to_email,bill_to_phone"/>
+                <input type="hidden" name="bill_to_forename" t-att-value='bill_to_forename'/>
+                <input type="hidden" name="bill_to_surname" t-att-value='bill_to_surname'/>
+                <input type="hidden" name="bill_to_phone" t-att-value='bill_to_phone'/>
+                <input type="hidden" name="bill_to_email" t-att-value='bill_to_email'/>
+                <input type="hidden" name="bill_to_address_line2" t-att-value='bill_to_address_line2'/>
+                <input type="hidden" name="bill_to_address_line1" t-att-value='bill_to_address_line1'/>
+                <input type="hidden" name="bill_to_address_city" t-att-value='bill_to_address_city'/>
+                <input type="hidden" name="bill_to_address_country" t-att-value='bill_to_address_country'/>
+                <input type="hidden" name="amount" t-att-value='amount'/>
+                <input type="hidden" name="signature" id="signature" t-att-value='signature'/>
+
+                <!-- Shipping Information-->
+
+                <!-- Submit-->
+               <!-- <button type="submit" width="100px" t-att-class="submit_class">
+                    <img t-if="not submit_txt" src="/payment_payfort/static/src/img/authorize_icon.png"/>
+                    <span t-if="submit_txt"><t t-esc="submit_txt"/> <span class="fa fa-long-arrow-right"/></span>
+                </button>-->
+                </div>
+            <!--</form>-->
+        </template>
+
+    </data>
+</odoo>

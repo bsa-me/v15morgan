@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="registered_candidates_view_tree" model="ir.ui.view">
+        <field name="name">registered.candidates.view.tree</field>
+        <field name="model">event.registration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="event_id"/>
+                <field name="company_id"/>
+                <field name="event_begin_date"/>
+                <field name="amount_paid_percentage"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="registered_candidates_action" model="ir.actions.act_window">
+        <field name="name">Registered Candidates</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">event.registration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="registered_candidates_view_tree" />
+    </record>
+
+    <menuitem id="registered_candidates_menu"
+              name="Registered Candidates"
+              parent="event.menu_reporting_events"
+              action="registered_candidates_action"/>
+</odoo>

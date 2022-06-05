@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+        <record id="sale_target_form" model="ir.ui.view">
+            <field name="name">sale.user.target.form</field>
+            <field name="model">sale.user.target</field>
+            <field name="arch" type="xml">
+                <form string="Sales Target">
+                    <sheet>
+                      <group>
+                        <group>
+                            <field name='company_id' options="{'no_create':1, 'no_open':1}"/>
+                            <field name="user_id"  options="{'no_create':1, 'no_open':1}"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                          <field name='term_id' options="{'no_create': True}"/>
+                          <field name='program_id' options="{'no_create': True}"/>
+                          <field name='event_id' options="{'no_create': True}"/>
+                          <field name='study_format' />
+                          <field name='target' widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                          <field name='actual_sales' widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                          <field name='actual_vs_target'/>
+                          <field name='currency_id' invisible='1'/>
+                        </group>
+                      </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- certificates tree view -->
+        <record id="sale_target_tree" model="ir.ui.view">
+            <field name="name">sale.user.target.tree</field>
+            <field name="model">sale.user.target</field>
+            <field name="arch" type="xml">
+                <tree string="Target">
+                    <field name="user_id" />
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name='target' sum='target' widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name='actual_sales' sum='sales' widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name='actual_vs_target'/>
+                    <field name='currency_id' invisible='1'/>
+                </tree>
+            </field>
+        </record>
+
+
+      <record model="ir.actions.act_window" id="sale_target_action">
+              <field name="name">Sales target per salesperson</field>
+              <field name="type">ir.actions.act_window</field>
+              <field name="res_model">sale.user.target</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+      <menuitem id="sale_target_menu"
+            name="Sales target per salesperson" parent="sale.menu_sale_config" action="sale_target_action" sequence="3"/>
+
+  </data>
+</odoo>

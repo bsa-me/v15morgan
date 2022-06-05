@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="snippet_testimonial" name="Testimonial snippet">
+	  <section class="snippet_testimonial">
+	    <div class="container text-center">
+	      
+	      <div class="row">
+		      
+			<div class="col-md-4">
+				<div class="kf_cur_catg_des color-1">
+					<span><i class="icon-statistics"></i></span>
+					<div class="kf_cur_catg_capstion">
+						<h5>Business</h5>
+						<p>Business Trends changing with latest courses are available with us.</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="kf_cur_catg_des color-2">
+					<span><i class="icon-accounting5"></i></span>
+					<div class="kf_cur_catg_capstion">
+						<h5>Accounting</h5>
+						<p>Accounting need to be perfect. Come and join with us with best resources.</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="kf_cur_catg_des color-3">
+					<span><i class="icon-chemistry29"></i></span>
+					<div class="kf_cur_catg_capstion">
+						<h5>Science &amp; Technology</h5>
+						<p>Latest technologies online courses are available with new courses. </p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="kf_cur_catg_des color-4">
+					<span><i class="icon-caduceus8"></i></span>
+					<div class="kf_cur_catg_capstion">
+						<h5>Health &amp; Psychology</h5>
+						<p>Learn about the Health &amp; Psychology with the complete presentation. </p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="kf_cur_catg_des color-5">
+					<span><i class="icon-cocktail32"></i></span>
+					<div class="kf_cur_catg_capstion">
+						<h5>Food &amp; Drinking</h5>
+						<p>Get the best eating education and practice by taking online courses.</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="kf_cur_catg_des color-6">
+					<span><i class="fa fa-line-chart"></i></span>
+					<div class="kf_cur_catg_capstion">
+						<h5>Creative Arts &amp; Media</h5>
+						<p>Come and explore your creative arts and media by going further.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	      
+	    </div>
+	  </section>
+	</template>
+	
+	<template id="place_into_bar" inherit_id="website.snippets" name="Place into bar">
+	  <xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
+	    <t t-snippet="theme_morgan.snippet_testimonial"
+	       t-thumbnail="/theme_morgan/static/src/img/ui/snippet_thumb.jpg"/>
+	  </xpath>
+	</template>
+</odoo>

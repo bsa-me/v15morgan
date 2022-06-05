@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="session_change_date_template" model="mail.template">
+            <field name="name">Session: Change Date</field>
+            <field name="model_id" ref="education.model_event_track"/>
+            <field name="subject">Date Changed {{ object.name }}</field>
+            <field name="body_html" type="html">
+<div>
+    Dear Sir/Madame, <br/>
+    We are pleased to inform you that your the session <t t-out="object.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable=""></t> date has been changed to  <t t-out="object.date" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable=""></t> 
+<br/>
+Best Regards.
+</div>
+</field>
+        </record>
+
+        <record id="event_get_started" model="mail.template">
+            <field name="name">Get Started</field>
+            <field name="model_id" ref="education.model_event_registration"/>
+            <field name="subject">Are you ready to get started?</field>
+            <field name="body_html" type="html">
+<h4 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:31.2px;color:#091124;line-height:1.2;font-weight:500;">Welcome to the event <t t-out="object.event_id.name" data-oe-t-inline="true" contenteditable="false"> </t>, Facilitator: <t t-out="object.event_id.user_id.name" data-oe-t-inline="true" contenteditable="false"></t>, Facilitator Email: <t t-out="object.event_id.user_id.email" data-oe-t-inline="true" contenteditable="false"></t></h4>
+<br/>
+<h5 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:14.3px;color:#091124;line-height:1.2;font-weight:500;">Please Check Attached the event schedule.  </h5>
+</field>
+<field name="report_template" ref="education.event_registration_report" />
+        </record>
+
+
+
+
+        <record id="important_deadlines" model="mail.template">
+            <field name="name">Important Deadlines</field>
+            <field name="model_id" ref="education.model_event_registration"/>
+            <field name="email_to">{{ (object.email and '"%s" &lt;%s&gt;' % (object.name, object.email) or object.partner_id.email_formatted or '') }}</field>
+            <field name="subject">Important Deadlines</field>
+            <field name="body_html" type="html">
+<h4 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:31.2px;color:#091124;line-height:1.2;font-weight:500;">Welcome to the event <t t-out="object.event_id.name" data-oe-t-inline="true" contenteditable="false"> </t>, Facilitator: <t t-out="object.event_id.user_id.name" data-oe-t-inline="true" contenteditable="false"></t>, Facilitator Email: <t t-out="object.event_id.user_id.email" data-oe-t-inline="true" contenteditable="false"></t></h4>
+<br/>
+<h5 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:14.3px;color:#091124;line-height:1.2;font-weight:500;">Please Check Attached the event schedule.  </h5>
+</field>
+        </record>	
+
+
+        <record id="generic_importance_of_meeting" model="mail.template">
+            <field name="name">Progressing Studies</field>
+            <field name="model_id" ref="education.model_event_registration"/>
+            <field name="email_to">{{ (object.email and '"%s" &lt;%s&gt;' % (object.name, object.email) or object.partner_id.email_formatted or '') }}</field>
+            <field name="subject">How are you progressing with your studies? ( homework)</field>
+            <field name="body_html" type="html">
+<h4 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:31.2px;color:#091124;line-height:1.2;font-weight:500;">Welcome to the event <t t-out="object.event_id.name" data-oe-t-inline="true" contenteditable="false"> </t>, Facilitator: <t t-out="object.event_id.user_id.name" data-oe-t-inline="true" contenteditable="false"></t>, Facilitator Email: <t t-out="object.event_id.user_id.email" data-oe-t-inline="true" contenteditable="false"></t></h4>
+<br/>
+<h5 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:14.3px;color:#091124;line-height:1.2;font-weight:500;">Please Check Attached the event schedule.  </h5>
+</field>
+        </record>	
+
+        <record id="important_deadlines" model="mail.template">
+            <field name="name">Important Deadlines</field>
+            <field name="model_id" ref="education.model_event_registration"/>
+            <field name="email_to">{{ (object.email and '"%s" &lt;%s&gt;' % (object.name, object.email) or object.partner_id.email_formatted or '') }}</field>
+            <field name="subject">Important Deadlines</field>
+            <field name="body_html" type="html">
+<h4 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:31.2px;color:#091124;line-height:1.2;font-weight:500;">Welcome to the event <t t-out="object.event_id.name" data-oe-t-inline="true" contenteditable="false"> </t>, Facilitator: <t t-out="object.event_id.user_id.name" data-oe-t-inline="true" contenteditable="false"></t>, Facilitator Email: <t t-out="object.event_id.user_id.email" data-oe-t-inline="true" contenteditable="false"></t></h4>
+<br/>
+<h5 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:14.3px;color:#091124;line-height:1.2;font-weight:500;">Please Check Attached the event schedule.  </h5>
+</field>
+        </record>
+
+        <record id="attendance_importance" model="mail.template">
+            <field name="name">Importance of Attendance</field>
+            <field name="model_id" ref="education.model_event_registration"/>
+            <field name="subject">Importance of Attendance</field>
+            <field name="email_to">{{ (object.email and '"%s" &lt;%s&gt;' % (object.name, object.email) or object.partner_id.email_formatted or '') }}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="box-sizing:border-box;padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;" width="100%"><tbody><tr><td align="center">
+<t t-set="date_begin" t-value="format_datetime(object.event_id.date_begin, tz='UTC', dt_format=&quot;yyyyMMdd'T'HHmmss'Z'&quot;)" data-oe-t-inline="true"></t>
+<t t-set="date_end" t-value="format_datetime(object.event_id.date_end, tz='UTC', dt_format=&quot;yyyyMMdd'T'HHmmss'Z'&quot;)" data-oe-t-inline="true"></t>
+<t t-set="is_online" t-value="'is_published' in object.event_id and object.event_id.is_published" data-oe-t-inline="true"></t>
+<t t-set="event_organizer" t-value="object.event_id.organizer_id" data-oe-t-inline="true"></t>
+<t t-set="event_address" t-value="object.event_id.address_id" data-oe-t-inline="true"></t>
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="box-sizing:border-box;padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- HEADER -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table width="590" border="0" cellpadding="0" cellspacing="0" style="box-sizing:border-box;min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tbody><tr><td valign="middle">
+                    <span style="font-size: 10px;">Your registration</span><br/>
+                    <span style="font-size: 20px; font-weight: bold;">
+                        <t t-out="object.name" data-oe-t-inline="true" contenteditable="false"></t>
+                    </span>
+                </td><td valign="middle" align="right">
+                    <t t-if="is_online" data-oe-t-group-active="true" data-oe-t-group="0" data-oe-t-selectable="true" data-oe-t-inline="true">
+                    <a style="border-style:solid;box-sizing:border-box;border-left-color:#875a7b;border-bottom-color:#875a7b;border-right-color:#875a7b;border-top-color:#875a7b;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding: 8px 12px; font-size: 12px; color: #FFFFFF; text-decoration: none ; font-weight: 400; background-color: #875A7B; border: 0px solid #875A7B; border-radius:3px" t-attf-href="{{ object.event_id.website_url }}">
+                        View Event
+                    </a>
+                    </t>
+                    <t t-else="" data-oe-t-selectable="true" data-oe-t-group="0" data-oe-t-inline="true">
+                    <img style="border-style:none;box-sizing:border-box;vertical-align:middle;padding: 0px; margin: 0px; height: 0px; width: 80px;" t-attf-src="{{ '/logo.png?company=%s' % object.company_id.id }}" t-attf-alt="{{ '%s' % object.company_id.name }}" width="80px" height="0" />
+                    </t>
+                </td></tr>
+                <tr><td colspan="2" style="text-align:center;">
+                </td></tr>
+            </tbody></table>
+        </td>
+    </tr>
+    <!-- EVENT DESCRIPTION -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table width="590" border="0" cellpadding="0" cellspacing="0" style="box-sizing:border-box;min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tbody><tr><td valign="top" style="font-size: 14px;">
+                    <div>Dear <t t-out="object.name" data-oe-t-inline="true" contenteditable="false"></t>,<br/>We noticed that you skipped two attendances in a row, attendance is very important for your certification.</div><div><span style="color: #454748;"> Best Regards.<br/>
+                        <t t-if="event_organizer" data-oe-t-group-active="true" data-oe-t-group="1" data-oe-t-selectable="true" data-oe-t-inline="true">
+                            <t t-out="event_organizer.name" data-oe-t-inline="true" contenteditable="false"></t>
+                        </t>
+                        <t t-else="" data-oe-t-selectable="true" data-oe-t-group="1" data-oe-t-inline="true">
+                            The <t t-out="object.event_id.name" data-oe-t-inline="true" contenteditable="false"></t> Team
+                        </t>
+                        </span>
+                    </div>
+                </td></tr>
+            </tbody></table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</tbody></table>
+            
+</field>
+        </record>
+
+        <record id="alumni_template" model="mail.template">
+            <field name="name">Proud to have you as our Alumni</field>
+            <field name="model_id" ref="education.model_certificate"/>
+            <field name="subject">Proud to have you as our Alumni</field>
+            <field name="email_to">{{ (object.registration_id.email or '') }}</field>
+			<field name="report_template" ref="education.certificate_report" />
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="box-sizing:border-box;padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;" width="100%"><tbody><tr><td align="center">
+<t t-set="date_begin" t-value="format_datetime(object.event_id.date_begin, tz='UTC', dt_format=&quot;yyyyMMdd'T'HHmmss'Z'&quot;)" data-oe-t-inline="true"></t>
+<t t-set="date_end" t-value="format_datetime(object.event_id.date_end, tz='UTC', dt_format=&quot;yyyyMMdd'T'HHmmss'Z'&quot;)" data-oe-t-inline="true"></t>
+<t t-set="is_online" t-value="'is_published' in object.event_id and object.event_id.is_published" data-oe-t-inline="true"></t>
+<t t-set="event_organizer" t-value="object.event_id.organizer_id" data-oe-t-inline="true"></t>
+<t t-set="event_address" t-value="object.event_id.address_id" data-oe-t-inline="true"></t>
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="box-sizing:border-box;padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- HEADER -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table width="590" border="0" cellpadding="0" cellspacing="0" style="box-sizing:border-box;min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tbody><tr><td valign="middle">
+                    <span style="font-size: 20px; font-weight: bold;">
+                        <t t-out="object.registration_id.name" data-oe-t-inline="true" contenteditable="false"></t>
+                    </span>
+                </td><td valign="middle" align="right">
+                    <t t-if="is_online" data-oe-t-group-active="true" data-oe-t-group="0" data-oe-t-selectable="true" data-oe-t-inline="true">
+                    <a style="border-style:solid;box-sizing:border-box;border-left-color:#875a7b;border-bottom-color:#875a7b;border-right-color:#875a7b;border-top-color:#875a7b;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding: 8px 12px; font-size: 12px; color: #FFFFFF; text-decoration: none ; font-weight: 400; background-color: #875A7B; border: 0px solid #875A7B; border-radius:3px" t-attf-href="{{ object.registration_id.event_id.website_url }}">
+                        View Event
+                    </a>
+                    </t>
+                    <t t-else="" data-oe-t-selectable="true" data-oe-t-group="0" data-oe-t-inline="true">
+                    <img style="border-style:none;box-sizing:border-box;vertical-align:middle;padding: 0px; margin: 0px; height: 0px; width: 80px;" t-attf-src="{{ '/logo.png?company=%s' % object.registration_id.company_id.id }}" t-attf-alt="{{ '%s' % object.registration_id.company_id.name }}" width="80px" height="0" />
+                    </t>
+                </td></tr>
+                <tr><td colspan="2" style="text-align:center;">
+                </td></tr>
+            </tbody></table>
+        </td>
+    </tr>
+    <!-- EVENT DESCRIPTION -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table width="590" border="0" cellpadding="0" cellspacing="0" style="box-sizing:border-box;min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tbody><tr><td valign="top" style="font-size: 14px;">
+                    <div>Dear <t t-out="object.registration_id.name" data-oe-t-inline="true" contenteditable="false"></t>,<br/>Thank you for successfully completing the course + good luck on passing your exam and earning your certification</div><div><span style="color: #454748;"> Best Regards.<br/>
+                        <t t-if="event_organizer" data-oe-t-group-active="true" data-oe-t-group="1" data-oe-t-selectable="true" data-oe-t-inline="true">
+                            <t t-out="event_organizer.name" data-oe-t-inline="true" contenteditable="false"></t>
+                        </t>
+                        <t t-else="" data-oe-t-selectable="true" data-oe-t-group="1" data-oe-t-inline="true">
+                            The <t t-out="object.registration_id.event_id.name" data-oe-t-inline="true" contenteditable="false"></t> Team
+                        </t>
+                        </span>
+                    </div>
+                </td></tr>
+            </tbody></table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</tbody></table>
+            
+</field>
+        </record>
+
+        <record id="good_luck_template" model="mail.template">
+            <field name="name">wishing candindate the best</field>
+            <field name="model_id" ref="education.model_attempt"/>
+            <field name="subject">Wishing Candindate The Best</field>
+            <field name="email_to">{{ (object.registration_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.registration_id.name"/>, <br/> Your exam is tomorrow, Best of luck and don't forget to keep us posted.<br/>
+                Best Regards.
+                </h3>
+            </field>
+        </record>
+
+        <record id="result_attempt_template" model="mail.template">
+            <field name="name">update on result</field>
+            <field name="model_id" ref="education.model_attempt"/>
+            <field name="subject">update on result</field>
+            <field name="email_to">{{ (object.registration_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.registration_id.name"/>, <br/> Please update us on your result if you passed or failed.<br/>
+                Best Regards.
+                </h3>
+            </field>
+        </record>
+
+        <record id="congratulation_template" model="mail.template">
+            <field name="name">Congratulation on passing</field>
+            <field name="model_id" ref="education.model_attempt"/>
+            <field name="subject">Congratulation on passing your exam!</field>
+            <field name="email_to">{{ (object.registration_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.registration_id.name"/>, <br/> Congratulations on passing your exam!<br/>
+                Best Regards.
+                </h3>
+            </field>
+        </record>
+
+        <record id="failed_attempt_template" model="mail.template">
+            <field name="name">Follow up on failed candidates</field>
+            <field name="model_id" ref="education.model_attempt"/>
+            <field name="subject">Follow up on failed candidates</field>
+            <field name="email_to">{{ (object.registration_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.registration_id.name"/>, <br/> It's okay that you failed the exam, you can repeat it again, contact us for any help.<br/>
+                Best Regards.
+                </h3>
+            </field>
+        </record>
+
+        <record id="welcome_after_payment_template" model="mail.template">
+            <field name="name">Welcome To Morgan</field>
+            <field name="model_id" ref="education.model_account_payment"/>
+            <field name="subject">Welcome to Morgan International</field>
+            <field name="email_to">{{ (object.partner_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.partner_id.name"/>, <br/> Welcome To Morgan International!<br/>
+                </h3>
+            </field>
+        </record>
+
+        <record id="welcome_instructor_template" model="mail.template">
+            <field name="name">Welcome To Morgan Faculty</field>
+            <field name="model_id" ref="education.model_hr_employee"/>
+            <field name="subject">Welcome To Morgan Faculty</field>
+            <field name="email_to">{{ (object.address_home_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.name"/>, <br/> Welcome To Morgan Faculty!<br/>
+                </h3>
+            </field>
+        </record>
+
+        <record id="reminder_of_sessions" model="mail.template">
+            <field name="name">Notify Instructor about his sessions</field>
+            <field name="model_id" ref="education.model_event_track"/>
+            <field name="subject">Welcome To Morgan Faculty</field>
+            <field name="email_to">{{ (object.employee_id.address_home_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                    <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.employee_id.name" data-oe-t-inline="true" contenteditable="false" oe-keep-contenteditable=""></t> Please note that you have a session <t t-out="object.name" data-oe-t-inline="true" contenteditable="false" oe-keep-contenteditable=""></t> for the event <t t-out="object.event_id.name" data-oe-t-inline="true" contenteditable="false" oe-keep-contenteditable=""></t> to give on <t t-out="object.date" data-oe-t-inline="true" contenteditable="false" oe-keep-contenteditable=""></t> from <t t-out="object.track_from" data-oe-t-inline="true" contenteditable="false" oe-keep-contenteditable=""></t> to <t t-out="object.to" data-oe-t-inline="true" contenteditable="false" oe-keep-contenteditable=""></t> </h3>
+            </field>
+        </record>
+
+        <record id="payment_instructor_template" model="mail.template">
+            <field name="name">Instructor Payment</field>
+            <field name="model_id" ref="education.model_hr_employee"/>
+            <field name="subject">Your Payment is ready</field>
+            <field name="email_to">{{ (object.address_home_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.name"/>, <br/> Your payment is ready!<br/> Best Regards.
+                </h3>
+            </field>
+        </record>
+
+        <record id="end_event_instructor_template" model="mail.template">
+            <field name="name">End of event thank you</field>
+            <field name="model_id" ref="education.model_hr_employee"/>
+            <field name="subject">Thank You For Your Effort!</field>
+            <field name="email_to">{{ (object.address_home_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.name"/>, <br/> The course has ended, thank you for your efforts!<br/> Best Regards.
+                </h3>
+            </field>
+        </record>
+
+        <record id="instructor_birthday_template" model="mail.template">
+            <field name="name">Instructor Birthday</field>
+            <field name="model_id" ref="education.model_hr_employee"/>
+            <field name="subject">It's your birthday!</field>
+            <field name="email_to">{{ (object.address_home_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">Dear <t t-out="object.name"/>, <br/> Happy Birthday &amp; Best Wishes!<br/>
+                </h3>
+            </field>
+        </record>
+
+</odoo>

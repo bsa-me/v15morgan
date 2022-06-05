@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="workspace_program_attachment" model="documents.folder">
+            <field name="name">Program Attachment</field>
+        </record>
+        
+        <record id="workspace_instructor_contract" model="documents.folder">
+            <field name="name">Instructors Agreements</field>
+        </record>
+        
+    </data>
+</odoo>

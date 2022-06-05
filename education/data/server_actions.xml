@@ -1,0 +1,90 @@
+<odoo>
+  <data>
+    <record model="ir.actions.server" id="edit_sessions">
+	      <field name="name">Edit Sessions</field>
+	      <field name="model_id" ref="website_event_track.model_event_track" />
+	      <field name="binding_model_id" ref="website_event_track.model_event_track" />
+	      <field name="state">code</field>
+	      <field name="code">
+ids = []
+for record in records:
+	ids.append(record.id)
+if(ids):
+	action = {
+		'type': 'ir.actions.act_window',
+		'name': 'Edit Sessions', 
+		'view_mode': 'tree',
+		'res_model': 'event.track',
+		'domain': [('id', 'in', ids)],
+		'target': 'new',
+		'view_id': env.ref('education.editable_event_track').id
+	}
+	      </field>
+    </record>
+
+
+    <record model="ir.actions.server" id="approve_payslips">
+	      <field name="name">Approved by operations</field>
+	      <field name="model_id" ref="hr_payroll.model_hr_payslip" />
+	      <field name="binding_model_id" ref="hr_payroll.model_hr_payslip" />
+	      <field name="state">code</field>
+	      <field name="code">
+for record in records:
+  if record.state == 'operationapproval':
+    record.operation_approve()
+	      </field>
+    </record>
+
+    <record model="ir.actions.server" id="approve_payslips">
+	      <field name="name">Approved by operations</field>
+	      <field name="model_id" ref="hr_payroll.model_hr_payslip" />
+	      <field name="binding_model_id" ref="hr_payroll.model_hr_payslip" />
+	      <field name="state">code</field>
+	      <field name="code">
+for record in records:
+  if record.state == 'operationapproval':
+    record.operation_approve()
+	      </field>
+    </record>
+
+    <record model="ir.actions.server" id="reject_payslips">
+	      <field name="name">Reject</field>
+	      <field name="model_id" ref="hr_payroll.model_hr_payslip" />
+	      <field name="binding_model_id" ref="hr_payroll.model_hr_payslip" />
+	      <field name="state">code</field>
+	      <field name="code">
+for record in records:
+  if record.state in ['operationapproval','accountingapproval']:
+    ctx = {}
+    ctx['default_payslip_ids'] = records.ids
+    action = {
+      'type': 'ir.actions.act_window',
+      'view_mode': 'form',
+      'name': 'Reason',
+      'res_model': 'payslip.reject.reason',
+      'context': ctx,
+      'target': 'new'
+    }
+	      </field>
+    </record>
+
+    <record model="ir.actions.server" id="event_program_attachment_print">
+	      <field name="name">Program Attachments</field>
+	      <field name="model_id" ref="model_event_event" />
+	      <field name="binding_model_id" ref="model_event_event" />
+	      <field name="state">code</field>
+	      <field name="code">
+documents = record.program_id.program_attachment_ids.mapped('document_ids')
+action = {
+    'type': 'ir.actions.act_window',
+    'name': 'Attachment Details', 
+    'view_mode': 'kanban',
+    'res_model': 'documents.document',
+    'target': 'new',
+    'domain': [('id','in',documents.ids)]
+}
+	      </field>
+    </record>
+
+  </data>
+</odoo>

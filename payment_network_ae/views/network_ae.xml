@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    <template id="redirect_form">
+        <form t-att-action="order_url" method="post">
+         <!--   <input type="hidden" name="reference" t-att-value="reference"/> -->
+        </form>
+    </template>
+
+        <template id="networkae_acquirer_button">
+        <script type="text/javascript">
+            window.location.href = '<t t-esc="order_url"/>';
+        </script>
+       <!-- <div>
+            <input type="hidden" name="data_set" t-att-data-action-url="order_url" data-remove-me=""/>
+        </div> -->
+        </template>
+
+    </data>
+</odoo>

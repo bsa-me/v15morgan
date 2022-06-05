@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+
+        <record id="event_registration_kanban_inherit" model="ir.ui.view">
+            <field name="name">event.registration.kanban.inherit</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref='event.event_registration_view_kanban'/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//kanban" position="attributes">
+                        <attribute name="default_group_by">transfer_status</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+        
+        <record id="event_registration_search_inherit" model="ir.ui.view">
+            <field name="name">event.registration.search.inherit</field>
+            <field name="model">event.registration</field>
+            <field name="inherit_id" ref='event.view_registration_search'/>
+            <field name="arch" type="xml">
+                <data>
+                    <filter name="expected" position="attributes">
+                        <attribute name="domain">[('state', 'in', ['draft', 'open', 'done', 'cancel'])]</attribute>
+                    </filter>
+                </data>
+            </field>
+        </record>
+
+
+        <record id="event_registration_inherit_form" model="ir.ui.view">
+            <field name="name">event.registration.inherit.form</field>
+            <field name="model">event.registration</field>
+            <field name='inherit_id' ref='event.view_event_registration_form'/>
+            <field name="arch" type="xml">
+                <data>
+                  <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name='statusbar_visible'>draft,open</attribute>
+                  </xpath>
+                  <xpath expr="//header" position="inside">
+                    <button name="%(education.event_transfer_action)d" string="Transfer" type="action" class="oe_highlight" context="{'default_type': 'transfer', 'default_old_event_id': event_id, 'default_registration_id': id}" groups="morgan_permissions.super_user_group,morgan_permissions.normal_operation_group,morgan_permissions.master_operation_group,morgan_permissions.master_marketing_group,morgan_permissions.master_accountant_group,morgan_permissions.city_operations_group"/>
+
+                    <button name="%(education.dropout_action)d" string="Drop Out" type="action" class="oe_highlight" context="{'default_type': 'dropout', 'default_registration_id': id}" groups="morgan_permissions.super_user_group,morgan_permissions.normal_operation_group,morgan_permissions.master_operation_group,morgan_permissions.master_marketing_group,morgan_permissions.master_accountant_group,morgan_permissions.city_operations_group"/>
+
+                  </xpath>
+
+                  <xpath expr="//field[@name='mobile']" position="after">
+                    <field name='transfer_status' readonly="1"/>
+                    <field name='reason' />
+                  </xpath>
+
+                  <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+                    <field name="attendance_ids"/>
+                  </xpath>
+                  <xpath expr="//field[@name='attendance_ids']" position="inside">
+                    <tree string="Attendance" decoration-danger="attended==False" decoration-success="attended==True" create="0" edit="1" editable="bottom">
+                                    <field name="id" invisible="1"/>
+                                    <field name="registration_id" readonly="1"/>
+                                    <field name="partner_id" readonly="1"/>
+                                    <field name="event_id" readonly="1"/>
+                                    <field name="session_id" readonly="1"/>
+                                    <field name="attended"/>
+                                </tree>
+                  </xpath>
+
+                  <group name="utm_link" position="after">
+                    <group string="Statistics" name="statistics">
+                        <field name='attendance_count' />
+                        <field name='avg_attendance' />
+                        <field name='nb_attendance' />
+                    </group>
+
+                  </group>
+
+                </data>
+            </field>
+        </record>
+
+    </data>
+</odoo>

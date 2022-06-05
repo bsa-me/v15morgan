@@ -1,0 +1,264 @@
+<odoo>
+    <data>
+        <record id="account_payment_inherit_view" model="ir.ui.view">
+            <field name="name">account.payment.form.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form" />
+            <field name="arch" type="xml">
+                <data>
+
+              <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+              </xpath>
+
+                  <xpath expr="//field[@name='payment_type']" position="attributes">
+                    <attribute name="attrs">{"invisible": [["show_payment_matching","=",True]]}</attribute>
+                  </xpath>
+
+                  <xpath expr="//field[@name='partner_type']" position="attributes">
+                    <attribute name="attrs">{"invisible": [["show_payment_matching","=",True]]}</attribute>
+                  </xpath>
+
+                  <xpath expr="//field[@name='payment_date']" position="attributes">
+                    <attribute name="attrs">{"invisible": [["show_payment_matching","=",True]]}</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='communication']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                  </xpath>
+
+                  <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="attrs">{"invisible": [["show_payment_matching","=",True]]}</attribute>
+                  </xpath>
+
+                  <xpath expr="//field[@name='company_id']" position="after">
+                    <field name='show_payment_matching' invisible='1'/>
+                  </xpath>
+                  <xpath expr="//button[@name='open_payment_matching_screen']" position="attributes">
+                    <attribute name="attrs">{"invisible": [["invoice_ids","!=",False]]}</attribute>
+                    <attribute name='name'>open_register_payment_popup_form</attribute>
+                  </xpath>
+
+                <xpath expr="//button[@name='button_journal_entries']" position="attributes">
+                 <attribute name="groups">base.group_no_one</attribute>
+                 </xpath>
+
+
+                  <xpath expr="//field[@name='payment_date']" position="after">
+                    <field name='date_cleared'/>
+                    <field name='payment_mode'/>
+                  </xpath>
+
+                  <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name='payment_ref'/>
+                    <field name='comment'/>
+                    <field name="partial_reconcile_ids" invisible='1'/>
+                  </xpath>
+
+                  <xpath expr="//group[@name='payment_difference']" position="attributes">
+                    <attribute name='invisible'>1</attribute>
+                  </xpath>
+
+                  <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+                    <field name="invoice_ids" readonly='1' attrs="{'invisible': [('state', '!=', 'reconciled')]}" />
+                  </xpath>
+
+                </data>
+  
+            </field>
+        </record>
+
+         <record id="account_payment_tree_inherit" model="ir.ui.view">
+            <field name="name">account.payment.tree.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree" />
+            <field name="arch" type="xml">
+                <data>
+                  <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                  </xpath>
+                </data>
+  
+            </field>
+        </record>
+
+                <record id="account_invoice_tree_inherit" model="ir.ui.view">
+            <field name="name">account.move.tree.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree" />
+            <field name="arch" type="xml">
+                <data>
+                  <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                  </xpath>
+                </data>
+  
+            </field>
+        </record>
+
+          <record id="account_move_inherit_view" model="ir.ui.view">
+            <field name="name">account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+                <data>
+
+              <xpath expr="//form[1]/header[1]/button[@name='action_invoice_sent']" position="after">
+                <button name="action_future_payment_sent" type="object" string="Send &amp; Print FP" attrs="{'invisible':['|', '|', ('state', '!=', 'posted'), ('invoice_sent', '=', True), ('type', 'not in', ('out_invoice', 'out_refund'))]}" class="oe_highlight" groups="base.group_user"/>
+                </xpath>
+
+              <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+              </xpath>
+
+              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[2]/field[@name='line_ids']/tree[1]/field[@name='tag_ids']" position="after">
+                <field name="is_future_payment" invisible='1'/>
+              </xpath>
+
+                     <page id='aml_tab' position='after'>
+                    <page string='Future Payments' attrs="{'invisible':[('type','!=','out_invoice')]}">
+
+                      <field name="future_payment_ids" widget="one2many_list" mode="tree,kanban" context="{'default_invoice_id': id, 'default_partner_id': partner_id, 'default_status': 'open','default_currency_id': currency_id, 'default_region_id': company_id}">
+                              <tree editable="botttom" decoration-danger="status!='paid'" decoration-success="status=='paid'">
+                                 <field name="name" string="Ref" readonly='1'/>
+                                  <field name="due_date" attrs="{'readonly': [('due_amount','=',0),('id','!=',False)]}"/>
+
+
+                                  <field name='amount_usd' sum="Amount" widget="monetary" options="{'currency_field': 'currency_usd'}"  readonly="1"/>
+                                  <field name='amount' sum="Amount" widget="monetary" options="{'currency_field': 'currency_id'}"  attrs="{'readonly': [('due_amount','=',0),('id','!=',False)]}"/>
+
+                                  <field name='due_amount' sum="Due" widget="monetary" options="{'currency_field': 'currency_id'}"  attrs="{'readonly': [('due_amount','=',0),('id','!=',False)]}"/>
+                                  <field name='status'  attrs="{'readonly': [('due_amount','=',0),('id','!=',False)]}"/>
+                                  <field name='currency_id' invisible='1'/>
+                                  <field name='currency_usd' invisible='1'/>
+                                  <field name='region_id' invisible='1'/>
+                                  <field name='is_covered' invisible='1'/>
+                                  <field name='invoice_id' invisible='1'/>
+                                  <field name='partner_id' invisible='1'/>
+                              </tree>
+                            </field>
+                            <group>
+                              <group>
+                                <field name='fp_schedule' widget='monetary'/>
+                              </group>
+                            </group>
+                          </page>
+                    
+                  </page>
+
+                  <field name='ref' position='after'>
+                    <field name='total_fp_amount' invisible='1'/>
+                  </field>
+
+                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_info']" position='before'>
+                      <page string="Receipts" name="studio_page_1eRoM" attrs="{'invisible': ['|',('payment_ids', '=', False),('state','!=','posted')]}">
+                        <group name="receipts" string='Receipts'>
+                          <field name="payment_ids" nolabel='1'>
+                            <tree decoration-info="state == 'draft'" decoration-muted="state in ['reconciled', 'cancelled']" edit="false" create="false">
+                              <field name="payment_date"/>
+                              <field name="name"/>
+                              <field name="journal_id"/>
+                              <field name="payment_mode"/>
+                              <field name="amount" sum="Amount"/>
+                              <field name="state" attrs="{}" invisible="1"/>
+                              <field name="currency_id" invisible="1"/>
+                              <field name="partner_type" invisible="1"/>
+                            </tree>
+                          </field>
+                        </group>
+                      </page>
+                    </xpath>
+
+            </data>
+  
+            </field>
+        </record>
+
+         <record id="res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.futurepayment</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+
+          <page name="accounting" position="after">
+            <page string="Future Payments" name="future_payments">
+              <group name="future_payment_group">
+                  <field name="future_payment_ids" nolabel='1'>
+                      <tree default_order='due_date' editable="botttom" decoration-danger="status!='paid'" decoration-success="status=='paid'">
+                         <field name="name" string="Ref" readonly="1"/>
+                         <field name="invoice_id" />
+                          <field name="due_date" attrs="{'readonly': [('due_amount','=',0),('id','!=',False)]}"/>
+
+
+                          <field name="amount_usd" sum="Amount" widget="monetary" options="{'currency_field': 'currency_usd'}" readonly="1"/>
+                          <field name="amount" sum="Amount" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'readonly': [('due_amount','=',0),('id','!=',False)]}"/>
+
+                          <field name="due_amount" sum="Due" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'readonly': [('due_amount','=',0),('id','!=',False)]}"/>
+                          <field name="status" attrs="{'readonly': [('due_amount','=',0),('id','!=',False)]}"/>
+                          <field name="currency_id" invisible="1"/>
+                          <field name="currency_usd" invisible="1"/>
+                          <field name="region_id" invisible="1"/>
+                          <field name="is_covered" invisible="1"/>
+                          <field name="partner_id" invisible="1"/>
+                      </tree>
+                  </field>
+              </group>
+            </page>
+        </page>
+
+  
+            </field>
+        </record>
+
+             <record id="res_partner_form_allocation_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.allocation</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+
+              <data>
+
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='followup_tab']/field[@name='customer_statement_line_ids']/tree[1]/field[@name='invoice_date_due']" position="after">
+                  <field name="allocation" optional="show"/>
+                </xpath>
+
+               <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='followup_tab']/field[@name='balance_invoice_ids']/tree[1]/field[@name='name']" position="attributes">
+                <attribute name='string'>Ref</attribute>
+                <attribute name='optional'>show</attribute>
+                </xpath>
+
+               <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='followup_tab']/field[@name='balance_invoice_ids']/tree[1]/field[@name='total_signed_amount']" position="after">
+                </xpath>
+                
+               <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='followup_tab']/field[@name='balance_invoice_ids']/tree[1]/field[@name='date']" position="before">
+                <field name='id' optional="show" attrs="{'invisible':[('is_payment_move','=',True)]}"/>
+                </xpath>
+
+              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='followup_tab']/field[@name='balance_invoice_ids']/tree[1]" position="attributes">
+                <attribute name="default_order">id</attribute>
+              </xpath>
+
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='followup_tab']/field[@name='balance_invoice_ids']/tree[1]/field[@name='invoice_date_due']" position="after">
+                  <field name="allocation" optional="show"/>
+                </xpath>
+
+
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='followup_tab']/field[@name='balance_invoice_ids']/tree[1]/field[@name='balance']" position="after">
+                  <field name='is_payment' invisible='1'/>
+                  <field name='allocated' invisible='1'/>
+                  <button string="Allocate" name="allocate_payment" type="object" attrs="{'invisible':['|',('is_payment','=',False),('allocated','=',True)]}"/> 
+
+                  <button string="Re-Allocate" name="reallocate" type="object" attrs="{'invisible':[('allocated','=',False)]}"/> 
+
+                  <button string="Open Payment" name="open_payment" type="object" icon="fa-external-link" attrs="{'invisible':['|',('is_payment','=',False)]}"/> 
+                </xpath>
+
+              </data>
+
+  
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

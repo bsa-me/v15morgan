@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="future_payment_document">
+<t t-call="web.external_layout">
+      <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            
+  <div class="page" style="page-break-before:always;">
+   <t t-if="o.partner_id.lang in ['ar_SY']">
+                  <style>
+                    .text-align{
+                    text-align:right !important;
+                    direction: rtl;
+                    }
+                    
+                    .rtl-table {
+                    direction:rtl;
+                    }
+                    
+                    th {
+                    text-align:right !important;
+                    direction: rtl;
+                    }
+                    </style>
+                </t>
+                
+                
+               <table class="rtl-table" border="0" cellpadding="0" cellspacing="0" width="100%" style="background: none;">
+              <tr style="background: none !important;">
+                
+            
+                <td style="background: none !important;" class="text-align">
+            
+                <div style="text-align:left;" class="text-align">
+                  <p><strong>From: </strong></p>
+                    
+                </div>
+                <div style="text-align:left;" class="text-align">
+                  <t t-if="o.company_id.invoice_issuance and o.company_id.parent_id">
+                    <p t-if="o.company_id.parent_id"><span t-field="o.company_id.parent_id"/></p>
+                    <p t-if="o.company_id.parent_id.vat"><span t-field="o.company_id.parent_id.vat"/></p>
+                    </t>
+                    
+                    <t t-if="not o.company_id.invoice_issuance">
+                    <p t-if="o.company_id"><span t-field="o.company_id"/></p>
+                    <p t-if="o.company_id.vat"><span t-field="o.company_id.vat"/></p>
+                    </t>
+                    
+                    
+                </div>
+            
+            </td>
+            <td style="background: none !important; width:30%;">
+            
+                <div style="text-align:left;" class="text-align">
+                  <p><strong>To:</strong></p>
+                    
+                </div>
+                <div style="text-align:left;" class="text-align">
+                    
+                    <p t-if="o.partner_id.name"><span t-field="o.partner_id.name"/></p>
+                    <p t-if="o.partner_id.vat"><span t-field="o.partner_id.vat"/></p>
+                    <p t-if="o.partner_id"><span t-field="o.partner_id.street"/></p>
+                     <p t-if="o.partner_id"><span t-field="o.partner_id.street2"/></p>
+                      <p t-if="o.partner_id"><span t-field="o.partner_id.city"/></p>
+                       <p t-if="o.partner_id"><span t-field="o.partner_id.country_id"/></p>
+                    
+                    
+                </div>
+            
+            </td>
+            </tr>
+            </table>
+            
+             <br/>  <br/> 
+
+                    <table class="table table-condensed rtl-table" name="invoice_line_table">
+                        <thead>
+                           <th>Ref</th>
+                            <th>Due Date</th>
+                            <th class="text-right">Amount($)</th>
+                            <th class="text-right">Amount</th>
+                            <th class="text-right">Due Amount</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody class="fp_tbody">
+                            <tr t-foreach="o.future_payment_ids" t-as="l">
+                                <td><span t-field="l.name"/></td>
+                                <td><span t-field="l.due_date"/></td>
+                                <td class="text-right" id="amount_usd">
+                                    <span t-field="l.amount_usd" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: l.currency_usd}"/>
+                                </td>
+                                <td class="text-right" id="amount">
+                                    <span t-field="l.amount" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: l.invoice_id.currency_id}"/>
+                                </td>
+                                
+                                <td class="text-right" id="due_amount">
+                                    <span t-field="l.due_amount" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: l.invoice_id.currency_id}"/>
+                                </td>
+                                
+                                <td><span t-field="l.status"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                                <br/><br/>
+                    
+                  
+                   
+                </div>
+                <p style="page-break-after:always;">   </p>
+                 <div class="text-align">
+                  <t t-if="o.company_id.show_in_invoice and o.type == 'out_invoice'">
+                      <h3><strong>Disclaimers:</strong></h3>
+                    <t t-if="o.partner_id.lang not in ['ar_SY']">   <span style="background: none !important;" t-field="o.company_id.disclaimer" t-options="{&quot;widget&quot;: &quot;html&quot;}"/> </t>
+                   </t>
+
+                   <t t-if="o.company_id.show_in_credit_note and o.type == 'out_refund'">
+                      <h3><strong>Disclaimers:</strong></h3>
+                    <t t-if="o.partner_id.lang not in ['ar_SY']">   <span style="background: none !important;" t-field="o.company_id.disclaimer" t-options="{&quot;widget&quot;: &quot;html&quot;}"/> </t>
+                   </t>
+
+                    </div>
+  
+        </t>
+
+    </t>
+    </t>
+
+
+    </template>
+
+    <report
+        id="report_future_payment_document"
+        string="Payment Schedule"
+        model="account.move"
+        report_type="qweb-pdf"
+        file="invoice_custom_reconciliation.future_payment_document"
+        name="invoice_custom_reconciliation.future_payment_document"
+    />
+
+</odoo>

@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+
+        <record id="odoo_export_tree_view" model="ir.ui.view">
+            <field name="name">odoo.export.view.tree</field>
+            <field name="model">odoo.export.view</field>
+            <field name='type'>tree</field>
+            <field name="priority" eval="1" />
+            <field name="arch" type="xml">
+                <tree>
+                  <field name='model'/>
+                    <field name='view_id'/>
+                </tree>
+
+            </field>
+        </record>
+
+        <record id="odoo_export_form_view" model="ir.ui.view">
+            <field name="name">odoo.export.view.form</field>
+            <field name="model">odoo.export.view</field>
+            <field name='type'>form</field>
+            <field name="priority" eval="1" />
+            <field name="arch" type="xml">
+                <form string='Device'>
+                  <header>
+                    <button name="parse_xml_to_excel" string="Export" type="object" class='oe_highlight' />
+                  </header>
+                    <sheet>
+                        <group>
+                          <group>
+                            <field name='view_id' options="{'no_open':True, 'no_create': True}"/>
+                            <field name='model' />
+                          </group>
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+    <record id="odoo_export_action" model="ir.actions.act_window">
+        <field name="name">Export Views</field>
+        <field name="res_model">odoo.export.view</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="odoo_export_menu_parent" name="Export" parent="base.menu_custom" sequence='26'/>
+
+    <menuitem id="odoo_export_menu_child" name="Views" action="odoo_export_action" parent="odoo_export_menu_parent" sequence='1'/>
+
+    </data>
+</odoo>

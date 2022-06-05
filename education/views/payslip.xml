@@ -1,0 +1,280 @@
+<odoo>
+    <data>
+        <record id="hr_payslip_inherit_form" model="ir.ui.view">
+            <field name="name">hr.payslip.form.inherit</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form" />
+            <field name="arch" type="xml">
+
+                <data>
+
+               <xpath expr="//form[1]/header[1]/field[@name='state']" position="attributes">
+                 <attribute name="statusbar_visible">draft,operationapproval,accountingapproval,approved</attribute>
+               </xpath>
+
+               <xpath expr="//field[@name='name']" position="after">
+                <field name="parent_id" invisible='1'/>
+                <!--<field name="rejected_reason" attrs="{'invisible': [('state','!=','cancel')]}" />-->
+               </xpath>
+
+
+               <xpath expr="//button[@name='compute_sheet']" position="attributes">
+                <attribute name="confirm">Are you sure you want to do this?</attribute>
+               </xpath>
+
+
+
+               <xpath expr="//button[@name='action_print_payslip']" position="attributes">
+                <attribute name="invisible">1</attribute>
+               </xpath>
+
+                  <xpath expr="//field[@name='contract_id']" position="attributes">
+                    <attribute name="domain">[('company_id','=',company_id),('employee_id','=',employee_id),('date_start','&lt;=',date_to),'|',('date_end','&gt;=',date_from),('date_end','=',False)]</attribute>
+                    <attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+                  </xpath>
+
+                  <xpath expr="//field[@name='struct_id']" position="before">
+                    <field name="contract_ids" widget='many2many_tags' options="{'no_create': True}"/>
+                  </xpath>
+
+
+
+
+
+               <xpath expr="//button[@name='action_payslip_cancel']" position="after">
+                    <button name="submit_payslip" groups="education.cities_operation_group" attrs="{'invisible':['|',('state', 'not in', ('draft')),('id','=',False)]}" type='object'  states='draft' confirm="Are you sure you want to do this?" string="Submit" class="oe_highlight"/>
+
+                    <button name="operation_approve" attrs="{'invisible':['|',('state', 'not in', ('operationapproval')),('id','=',False)]}" groups="education.class_room_department_group" type='object'  states='operationapproval' string="Approved by operations" class="oe_highlight" confirm="Are you sure you want to do this?"/>
+
+                    <button name="accounting_approve" attrs="{'invisible':['|',('state', 'not in', ('accountingapproval')),('id','=',False)]}" type='object'  states='accountingapproval' string="Approved by Accounting" class="oe_highlight" confirm="Are you sure you want to do this?" groups='education.accounting_management' context="{'payslip_generate_pdf': True}"/>
+
+                    <button name="return_payslip" groups="education.class_room_department_group" type='object'  states='operationapproval,accountingapproval' string="Return" class="oe_highlight" confirm="Are you sure you want to do this?"/>
+
+                </xpath>
+
+
+               <xpath expr="//button[@name='action_payslip_cancel']" position="attributes">
+                <attribute name='name'>%(education.payslip_reject_reason_action)d</attribute>
+                <attribute name="type">action</attribute>
+                <attribute name="context">{'default_payslip_id': id}</attribute>
+                <attribute name="states">operationapproval,accountingapproval</attribute>
+                <attribute name="string">Reject</attribute>
+                <attribute name="class">oe_highlight</attribute>
+                <attribute name="confirm">Are you sure you want to do this?</attribute>
+                <attribute name="groups">education.class_room_department_group</attribute>
+               </xpath>
+
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='work_entry_type_id']" position="before">
+                    <field name="display_type" attrs="{}" invisible="1"/>
+                  </xpath>
+
+
+                  <xpath expr="//field[@name='worked_days_line_ids']" position="attributes">
+                    <attribute name="widget">section_and_note_one2many</attribute>
+                  </xpath>
+
+                  
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='work_entry_type_id']" position="attributes">
+                    <attribute name='attrs'>{'required':[('display_type','=',False)]}</attribute>
+                    </xpath>
+
+                      <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='amount']" position="before">
+                        <field name='contract_currency_id' invisible='1'/>
+                        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='sequence']" position="move"/>
+                      </xpath>
+
+                      <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='amount']" position="attributes">
+                        <attribute name="options">{'currency_field': 'contract_currency_id'}</attribute>
+                      </xpath>
+
+                      <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='sequence']" position="attributes">
+                        <attribute name="attrs">{}</attribute>
+                        <attribute name="invisible"></attribute>
+                        <attribute name="widget">handle</attribute>
+                      </xpath>
+
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]" positon="inside">
+
+                    <control>
+                        <create name="add_line_control" string="Add a line"/>
+                        <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                    </control>
+                    
+                </xpath>
+
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='name']" position="after">
+                    <field name="contract_id" readonly='1'/>
+                    <field name="session_id" invisible='1'/>
+                    <field name="date"/>
+                  </xpath>
+                  
+                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='number_of_days']" position="replace"/>
+
+                  <xpath expr="//field[@name='number']" position="before">
+                    <xpath expr="//field[@name='company_id']" position="move"/>
+                  </xpath>
+
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='worked_days_line_ids']/tree[1]/field[@name='number_of_hours']" position="after">
+                    <field name="currency_usd" invisible="1"/>
+                    <field name="amount_usd" attrs="{'invisible': [('contract_currency_id','=',99)]}"/>
+                  </xpath>
+
+                </data>
+  
+            </field>
+        </record>
+
+        <template id="report_payslip_custom" inherit_id="hr_payroll.report_payslip">
+
+
+
+            <xpath expr="//t[@t-call='web.internal_layout']" position="attributes">
+              <attribute name="t-call">web.external_layout</attribute>
+            </xpath>
+            
+            <xpath expr="//div[@class='page']" position="replace">
+              <div class="page">
+                    <h2 t-field="o.name"/>
+
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <td><strong>Company Information</strong></td>
+                            <td>
+                                <div><span t-field="o.company_id.name"/></div>
+                                <div><span t-field="o.company_id.street"/></div>
+                                <div><span t-field="o.company_id.street2" t-if="o.company_id.street2"/></div>
+                                <div>
+                                    <span t-field="o.company_id.city"/>
+                                    <span t-field="o.company_id.state_id"/>
+                                    <span t-field="o.company_id.zip"/>
+                                </div>
+                                <div><span t-field="o.company_id.country_id"/></div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table name="employee-infos" class="table table-sm table-bordered">
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td><span t-field="o.employee_id"/></td>
+                            <td><strong>Designation</strong></td>
+                            <td><span t-field="o.employee_id.job_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Address</strong></td>
+                            <td colspan="3">
+                                <div t-field="o.employee_id.address_home_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email</strong></td>
+                            <td><span t-field="o.employee_id.work_email"/></td>
+                            <td><strong>Identification No</strong></td>
+                            <td><span t-field="o.employee_id.identification_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reference</strong></td>
+                            <td><span t-field="o.number"/></td>
+                            <td><strong>Bank Account</strong></td>
+                            <td><span t-field="o.employee_id.bank_account_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date From</strong></td>
+                            <td><span t-field="o.date_from"/></td>
+                            <td><strong>Date To</strong></td>
+                            <td><span t-field="o.date_to"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Computed On</strong></td>
+                            <td><span t-field="o.compute_date"/></td>
+                            <td><strong>Registration Number</strong></td>
+                            <td><span t-field="o.employee_id.registration_number"/></td>
+                        </tr>
+                    </table>
+
+                  <br/>
+                    <h3>Summary</h3>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                
+                                <th><strong>Code</strong></th>
+                                <th><strong>Amount</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.line_ids" t-as="payslip_line">
+                                <td>
+                                    <span t-field="payslip_line.code"/>
+                                </td>
+                                <td><span t-esc="payslip_line.total" digits="[42, 2]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.contract_id.company_id.currency_id}"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <br/>
+                    <h3>Sessions</h3>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                
+                                <th>Name</th>
+                                <th>Term</th>
+                                <th>Number of Hours</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.worked_days_line_ids" t-as="line">
+                                <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                   <t t-if="not line.display_type">
+                                    <td>
+                                      <span t-field="line.name"/>
+                                   </td>
+                                   <td><span t-field="line.term_id"/></td>
+                                  <td><span t-field="line.number_of_hours"/></td>
+                                  <td><span t-field="line.date"/></td>
+                                  <td><span t-esc="line.amount" digits="[42, 2]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.contract_id.company_id.currency_id}"/></td>
+                                  </t>
+                                  
+                                  <t t-if="line.display_type == 'line_section'">
+                                <td name="td_section_line" colspan="99">
+                                    <span t-field="line.name"/>
+                                </td>
+                                </t>
+                            </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    
+                    <br/><br/>
+                    <h3>Other Inputs</h3>
+                    
+                     <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.input_line_ids" t-as="input">
+                                <td><span t-field="input.input_type_id.name"/></td>
+                                <td><span t-field="input.amount"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-right"><strong>Authorized signature</strong></p>
+                </div>
+                
+    </xpath>
+
+        </template>
+
+
+    </data>
+</odoo>

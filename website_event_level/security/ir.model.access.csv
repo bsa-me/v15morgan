@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_event_level_portal,event.level.portal,model_event_level,,1,0,0,0
+access_event_level,event.level.portal,model_event_level,,1,1,1,1
+access_exam,exam.portal,education.model_exam,,1,0,0,0

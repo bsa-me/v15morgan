@@ -1,0 +1,45 @@
+<odoo>
+  <data>
+
+    <function name="unlink" model="ir.ui.menu">
+
+            <function name="search" model="ir.ui.menu">
+
+                <value
+
+                  eval="[('name', '=', 'Receipts'), ('complete_name', '=', 'Accounting/Customers/Receipts'),('sequence', '=', 1)]"
+
+                  />
+
+            </function>
+
+        </function>
+
+         <record model="ir.ui.menu" id="account.menu_action_account_payments_receivable">
+      <field name="name">Receipts</field>
+    </record>
+
+
+
+        <function name="write" model="ir.model.data">
+
+            <function name="search" model="ir.model.data">
+
+                <value
+
+                  eval="[('module', '=', 'account'), ('name', '=', 'action_account_payments')]"
+
+                  />
+
+            </function>
+
+            <value eval="{'noupdate': False}" />
+            </function>
+
+         <record model="ir.actions.act_window" id="account.action_account_payments">
+      <field name="name">Receipts</field>
+    </record>
+
+
+  </data>
+</odoo>

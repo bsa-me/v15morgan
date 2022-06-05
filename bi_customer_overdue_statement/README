@@ -1,0 +1,9 @@
+
+Version 13.0.0.1 : (11-11-19)
+		- Change in filters and days calculation.
+
+Version 13.0.0.2 : (06-12-19)
+		-  Change calculation of days for filters and set invoice_date for print statements.
+
+Version 13.0.0.3 : (20-01-20)
+		-  Calculate initial balance for filters and solve issue of overdue report.

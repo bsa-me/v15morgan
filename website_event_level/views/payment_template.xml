@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="payment" name='Exam Window' inherit_id="website_sale.payment">
+    <xpath expr="//div[@id='payment_method']" position="before">
+
+        <t t-set="exams" t-value="request.env['exam'].search([])"/>
+        <t t-if="exams">
+          <h3 class="mb24">Exam Window </h3>    
+          <select class="form-control o_website_form_input" name="exam_id">
+              <t t-foreach="exams" t-as="exam">
+                  <option t-att-value="exam.id">
+                      <span t-field="exam.name"/>
+                  </option>
+              </t>
+          </select>
+        </t>
+
+    </xpath>
+</template>
+
+</odoo>

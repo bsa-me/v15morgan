@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="utm_campaign_view_form_inherit" model="ir.ui.view">
+        <field name="name">utm.campaign.view.form.inherit</field>
+        <field name="model">utm.campaign</field>
+        <field name="inherit_id" ref="utm.utm_campaign_view_form"/>
+        <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="channel_id"/>
+                <field name="course_profit_margin"/>
+            </xpath>
+            <xpath expr="//field[@name='roi']" position="after">
+                <field name="total_revenue" widget='monetary'/>
+            </xpath>
+        </data>
+        </field>
+    </record>
+</odoo>

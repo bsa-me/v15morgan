@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="morgan_mrm_migration.list">
+      <field name="name">morgan_mrm_migration list</field>
+      <field name="model">morgan_mrm_migration.morgan_mrm_migration</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="morgan_mrm_migration.action_window">
+      <field name="name">morgan_mrm_migration window</field>
+      <field name="res_model">morgan_mrm_migration.morgan_mrm_migration</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="morgan_mrm_migration.action_server">
+      <field name="name">morgan_mrm_migration server</field>
+      <field name="model_id" ref="model_morgan_mrm_migration_morgan_mrm_migration"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="morgan_mrm_migration" id="morgan_mrm_migration.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="morgan_mrm_migration.menu_1" parent="morgan_mrm_migration.menu_root"/>
+    <menuitem name="Menu 2" id="morgan_mrm_migration.menu_2" parent="morgan_mrm_migration.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="morgan_mrm_migration.menu_1_list" parent="morgan_mrm_migration.menu_1"
+              action="morgan_mrm_migration.action_window"/>
+    <menuitem name="Server to list" id="morgan_mrm_migration" parent="morgan_mrm_migration.menu_2"
+              action="morgan_mrm_migration.action_server"/>
+-->
+  </data>
+</odoo>

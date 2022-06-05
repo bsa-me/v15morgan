@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_instructor_evaluation,access_instructor_evaluation,morgan_mrm_migration.model_mrm_instructor_evaluation,,1,1,1,1

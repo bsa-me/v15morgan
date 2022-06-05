@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="event_transfer_dropout_form" model="ir.ui.view">
+        <field name="name">event.transfer.dropout.form</field>
+        <field name="model">event.transfer.dropout</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet>
+                <group>
+                  <group>
+                    <field name='type' invisible='1'/>
+                    <field name='registration_id' invisible='1'/>
+                    <field name='old_event_id' invisible='1'/>
+                    <field name='new_event_id' attrs="{'invisible': [('type', '=', 'dropout')], 'required': [('type', '=', 'transfer')]}" />
+                    <field name='reason'/>
+                  </group>
+                </group>
+              </sheet>
+              <footer>
+                <button string="Validate" name="transfer_or_dropout_event" type="object" class="btn-primary"/>
+                <button string="Cancel" class="btn-default" special="cancel"/>
+              </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="event_transfer_action" model="ir.actions.act_window">
+        <field name="name">Transfer Event</field>
+        <field name="res_model">event.transfer.dropout</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="event_transfer_dropout_form"/>
+    </record>
+
+    <record id="dropout_action" model="ir.actions.act_window">
+        <field name="name">Dropout Event</field>
+        <field name="res_model">event.transfer.dropout</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="event_transfer_dropout_form"/>
+    </record>
+
+</odoo>

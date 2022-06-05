@@ -1,0 +1,96 @@
+<odoo>
+  <data>
+    <record id="event_order_form_inherit" model="ir.ui.view">
+      <field name="name">event.event.form.inherit</field>
+      <field name="model">event.event</field>
+      <field name="inherit_id" ref="event.view_event_form" />
+      <field name="arch" type="xml"> 
+        <data>
+
+        <xpath expr="//field[@name='company_id']" position="after">
+          <field name="is_super_user" invisible='1'/>
+          <field name="is_master_accountant" invisible='1'/>
+          <field name="is_normal_accountant" invisible='1'/>
+          <field name="is_master_operation" invisible='1'/>
+          <field name="is_normal_operation" invisible='1'/>
+          <field name="is_master_marketing" invisible='1'/>
+          <field name="is_normal_marketing" invisible='1'/>
+          <field name="is_master_commercial" invisible='1'/>
+          <field name="is_ro_staff" invisible='1'/>
+          <field name="is_head_of_hub" invisible='1'/>
+          <field name="is_business_manager" invisible='1'/>
+          <field name="is_program_advisor" invisible='1'/>
+          <field name="is_city_operations" invisible='1'/>
+          <field name="is_admin" invisible='1'/>
+          <field name="is_ecommerce" invisible='1'/>
+        </xpath>
+
+          <xpath expr="//button[@name='button_confirm']" position="attributes">
+            <attribute name="groups">morgan_permissions.super_user_group,morgan_permissions.normal_operation_group,morgan_permissions.master_operation_group</attribute>
+          </xpath>
+
+          <xpath expr="//button[@name='action_open_badge_editor']" position="attributes">
+            <attribute name="groups">morgan_permissions.super_user_group,morgan_permissions.normal_operation_group,morgan_permissions.master_operation_group</attribute>
+          </xpath>
+
+          <xpath expr="//button[@name='button_cancel']" position="attributes">
+            <attribute name="groups">morgan_permissions.super_user_group,morgan_permissions.normal_operation_group,morgan_permissions.master_operation_group</attribute>
+          </xpath>
+
+          <xpath expr="//button[@name='button_cancel']" position="attributes">
+            <attribute name="groups">morgan_permissions.super_user_group,morgan_permissions.normal_operation_group,morgan_permissions.master_operation_group</attribute>
+          </xpath>
+
+          <xpath expr="//button[@name='button_draft']" position="attributes">
+            <attribute name="groups">morgan_permissions.super_user_group,morgan_permissions.normal_operation_group,morgan_permissions.master_operation_group</attribute>
+          </xpath>
+
+          <xpath expr="//button[@name='button_draft']" position="attributes">
+            <attribute name="groups">morgan_permissions.super_user_group,morgan_permissions.normal_operation_group,morgan_permissions.master_operation_group</attribute>
+          </xpath>
+
+        <xpath expr="//field[@name='event_ticket_ids']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_city_operations","=",True],["is_normal_marketing","=",True],["is_super_user","=",False]]}</attribute>
+          <attribute name="force_save">True</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='event_mail_ids']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_city_operations","=",True],["is_normal_marketing","=",True],["is_super_user","=",False]]}</attribute>
+          <attribute name="force_save">True</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='survey_ids']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_city_operations","=",True],["is_normal_marketing","=",True],["is_super_user","=",False]]}</attribute>
+          <attribute name="force_save">True</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='target']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_city_operations","=",True],["is_normal_marketing","=",True],["is_super_user","=",False]]}</attribute>
+          <attribute name="force_save">True</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='expense_ids']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_city_operations","=",True],["is_normal_marketing","=",True],["is_super_user","=",False]]}</attribute>
+          <attribute name="force_save">True</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='meta_key_words']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_city_operations","=",True],["is_normal_marketing","=",True],["is_super_user","=",False]]}</attribute>
+          <attribute name="force_save">True</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='description']" position="attributes">
+          <attribute name="attrs">{"readonly": ["|",["is_city_operations","=",True],["is_normal_marketing","=",True],["is_super_user","=",False]]}</attribute>
+          <attribute name="force_save">True</attribute>
+        </xpath>
+
+        </data>
+
+
+      </field>
+
+    </record>
+
+  </data>
+</odoo>
+

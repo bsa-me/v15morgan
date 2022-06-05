@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="custom_sign_template_view_form_inherit" model="ir.ui.view">
+        <field name="name">custom.sign.template.view.form.inherit</field>
+        <field name="model">sign.template</field>
+        <field name="inherit_id" ref="sign.sign_template_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="fields_of"/>
+                <field name="event_reg_id" attrs="{'required':[(('fields_of','=','registration'))],'invisible':[('fields_of','!=','registration')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

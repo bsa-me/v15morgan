@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        
+        <record id="mailing_mailing_form_inherit" model="ir.ui.view">
+            <field name="name">mailing.mailing.inherit.form</field>
+            <field name="model">mailing.mailing</field>
+            <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
+            <field name="arch" type="xml">
+                <data>
+                  <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                      <page string="Dynamic Placeholder Generator">
+                          <group>
+                              <field name="model_object_field" />
+                              <field name="sub_object" readonly="1"/>
+                              <field name="sub_model_object_field" domain="[('model_id','=',sub_object),('ttype','!=','one2many'),('ttype','!=','many2many')]" attrs="{'readonly':[('sub_object','=',False)],'required':[('sub_object','!=',False)]}"/>
+                              <field name="null_value"/>
+                              <field name="copyvalue"/>
+                          </group>
+                      </page>
+                  </xpath>
+                </data>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

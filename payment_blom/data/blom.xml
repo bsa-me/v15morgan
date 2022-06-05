@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="payment_acquirer_blom" model="payment.acquirer">
+            <field name="name">BLOM BANK</field>
+            <field name="image_128" type="base64" file="payment_blom/static/description/icon.png"/>
+            <field name="provider">blom</field>
+            <field name="company_id" ref="base.main_company"/>
+           <field name="inline_form_view_id" ref="blom_acquirer_button"/>
+            <field name="pre_msg"><![CDATA[
+<p>You will be redirected to BLOM Bank Secure page after clicking on the payment button.</p>]]></field>
+            <field name='profile_id'>FF9AD4EB-CB79-4C98-B7DA-CEF52B331B6B</field>
+            <field name="access_key">7b123f6a55ed3eefa72eb9a804532b19</field>
+            <field name="secret_key">5444c446959b44349781a198a62e3c3eb3da705b108a48d0a60714b54d18cd08027521f853d24a6981ca5ff6f3071304fddf7bebd8d948f68eeb2eca40fbd03f9801a1e9a08c42698ff0fcf615d11ea342b1f5b1aec944ed925b7c8c320b552a5b105e8aae6545e6b7eac521e5bc258dba79e436e9544c2fb6f58566737b01e0</field>
+        </record>
+
+    </data>
+</odoo>

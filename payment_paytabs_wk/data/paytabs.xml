@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="payment_method_paytabs" model="account.payment.method">
+            <field name="name">PayTabs</field>
+            <field name="code">paytabs</field>
+            <field name="payment_type">inbound</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="acquirer_form_blom" model="ir.ui.view">
+            <field name="name">acquirer.form.payfort</field>
+            <field name="model">payment.acquirer</field>
+            <field name="inherit_id" ref="payment.payment_acquirer_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//group[@name="acquirer"]' position='after'>
+                    <group attrs="{'invisible': [('provider', '!=', 'blom')]}">
+                        <field name="profile_id"/>
+                        <field name="access_key" />
+                        <field name="secret_key" password="True"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>
