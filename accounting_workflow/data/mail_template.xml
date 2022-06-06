@@ -72,8 +72,7 @@
             <br/>
             <span style="font-size:12pt">If you have any questions regarding your purchase, please feel free to</span>
             <span style="font-size:12pt;font-weight:normal;text-decoration:underline">
-                <a href="https://mostafazaydan95-morganv15-stage-4851846.dev.odoo.com/contactus"
-                   style="text-decoration:none;box-sizing:border-box;background-color:transparent;color:#01666b;">
+                <a href="">
                     contact us
                 </a>
             </span>
@@ -115,12 +114,9 @@
 
                     <br/>If you have any questions regarding your recent purchase, please feel free to
                 </span>
-                <span style="font-size:12pt;font-weight:normal;text-decoration:underline">
-                    <a href="https://mostafazaydan95-morganv15-stage-4851846.dev.odoo.com/contactus"
-                       style="text-decoration:none;box-sizing:border-box;background-color:transparent;color:#01666b;">
-                        contact us
-                    </a>
-                </span>
+                <a href="">
+                    contact us
+                </a>
                 <span style="font-size:12pt">.
                     <br/>
                     <br/>Thanks again for choosing Morgan!
@@ -161,18 +157,17 @@
            </span>
             <span style="font-size:12pt">Please find it attached.</span>
             <br/>
-<!--            <t t-if="object.payment_term_id">-->
-<!--            <span style="font-size:12pt">This quotation is valid for <t t-out="object.payment_term_id.display_name"/>.</span>-->
-<!--            </t>-->
+            <t t-if="object.payment_term_id">
+            <span style="font-size:12pt">This quotation is valid for <t t-out="object.payment_term_id.display_name"/>.</span>
+            </t>
             <br/>
             <br/>
-<!--            <br/><span style="font-size:12pt">If you have any questions or would like to discuss further, please feel free to</span>-->
+            <br/><span style="font-size:12pt">If you have any questions or would like to discuss further, please feel free to</span>
 
-<!--            <span style="font-size:12pt;font-weight:normal;text-decoration:underline">-->
-<!--                <a href="https://mostafazaydan95-morganv15-stage-4851846.dev.odoo.com/contactus" style="text-decoration:none;box-sizing:border-box;background-color:transparent;color:#01666b;">-->
-<!--                    contact us-->
-<!--                </a>-->
-<!--            </span>-->
+
+            <a href="">
+                contact us
+            </a>
             <br/>
             <br/>
             <span style="font-size:12pt">Thank you for choosing Morgan!</span>
