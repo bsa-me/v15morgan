@@ -159,26 +159,26 @@
                       <t t-out="line.name"/> ,
                  </t>
            </span>
-<!--            <span style="font-size:12pt">Please find it attached.</span>-->
-<!--            <br/>-->
-<!--            <span style="font-size:12pt">This quotation is valid for <t t-out="object.payment_term_id.name"/>.</span>-->
-<!--            <br/>-->
-<!--            <br/>-->
-<!--            <br/>If you have any questions or would like to discuss further, please feel free to-->
+            <span style="font-size:12pt">Please find it attached.</span>
+            <br/>
+            <span style="font-size:12pt">This quotation is valid for <t t-out="object.payment_term_id.display_name"/>.</span>
+            <br/>
+            <br/>
+            <br/>If you have any questions or would like to discuss further, please feel free to
 
-<!--            <span style="font-size:12pt;font-weight:normal;text-decoration:underline">-->
-<!--                <a href="https://mostafazaydan95-morganv15-stage-4851846.dev.odoo.com/contactus" style="text-decoration:none;box-sizing:border-box;background-color:transparent;color:#01666b;">-->
-<!--                    contact us-->
-<!--                </a>-->
-<!--            </span>-->
-<!--            <br/>-->
-<!--            <br/>-->
-<!--            <span style="font-size:12pt">Thank you for choosing Morgan!</span>-->
-<!--            <br/>-->
-<!--            <br/>-->
-<!--            <span style="font-size:12pt">Sincerely,</span>-->
-<!--            <br/>-->
-<!--            <span style="font-size:12pt">The Morgan Team.</span>-->
+            <span style="font-size:12pt;font-weight:normal;text-decoration:underline">
+                <a href="https://mostafazaydan95-morganv15-stage-4851846.dev.odoo.com/contactus" style="text-decoration:none;box-sizing:border-box;background-color:transparent;color:#01666b;">
+                    contact us
+                </a>
+            </span>
+            <br/>
+            <br/>
+            <span style="font-size:12pt">Thank you for choosing Morgan!</span>
+            <br/>
+            <br/>
+            <span style="font-size:12pt">Sincerely,</span>
+            <br/>
+            <span style="font-size:12pt">The Morgan Team.</span>
         </field>
         <field name="report_template" ref="sale.action_report_saleorder"/>
         <field name="report_name">Quotation</field>
