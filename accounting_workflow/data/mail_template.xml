@@ -161,7 +161,9 @@
            </span>
             <span style="font-size:12pt">Please find it attached.</span>
             <br/>
+            <t t-if="object.payment_term_id">
             <span style="font-size:12pt">This quotation is valid for <t t-out="object.payment_term_id.display_name"/>.</span>
+            </t>
             <br/>
             <br/>
             <br/>If you have any questions or would like to discuss further, please feel free to
