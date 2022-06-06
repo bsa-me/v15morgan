@@ -153,9 +153,9 @@
                 </strong>
             </h4>
             <br/>
-            <span style="font-size:12pt">Dear
-                <t t-out="object.partner_id.name"/>
-            </span>
+<!--            <span style="font-size:12pt">Dear-->
+<!--                <t t-out="object.partner_id.name"/>-->
+<!--            </span>-->
             <br/>
             <br/>
             <span style="font-size:12pt">We are happy to share with you a quotation for the following courses :(
