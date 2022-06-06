@@ -53,10 +53,10 @@
             <field name="subject">Thank you for your payment</field>
             <field name="body_html" type="html">
                 <p style="margin:0px 0 12px 0;box-sizing:border-box;">
-                        <span style="font-size:12pt">Dear {{object.partner_id .name}}
+                        <span style="font-size:12pt">Dear <t t-out="object.partner_id.name"/>
                             <br/>
                             <br/>Thank you for your payment!<br/>
-                            <br/>We just wanted to let you know that your payment for the following amount ({{ object.amount }}) has been successful.
+                            <br/>We just wanted to let you know that your payment for the following amount (<t t-out="object.amount"/>) has been successful.
                                  Please find your receipt ({{ object.name }}) attached.
                             <br/>
 
