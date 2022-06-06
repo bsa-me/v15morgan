@@ -158,13 +158,13 @@
             </span>
             <br/>
             <br/>
-            <span style="font-size:12pt">We are happy to share with you a quotation for the following courses : (
+            <span style="font-size:12pt">We are happy to share with you a quotation for the following courses :(
                 <t t-foreach="object.order_line" t-as="line" data-oe-t-inline="true">
                     <t t-out="line.name"/>
                     ,
                 </t>
-                )
             </span>
+            <span>)</span>
             <span style="font-size:12pt">Please find it attached.</span>
             <br/>
             <br/>
