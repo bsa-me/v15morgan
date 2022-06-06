@@ -20,7 +20,7 @@
                 <table class="table table-condensed rtl-table" name="invoice_line_table">
                     <thead>
                         <th>Item</th>
-                        <th class="text-right">Description</th>
+                        <th>Description</th>
                         <th class="text-right">Quantity</th>
                         <th class="text-right">Unit Price</th>
                         <th with="15%" class="text-right">Tax Rate</th>
