@@ -10,10 +10,10 @@
             <field name="body_html" type="html">
                 <p style="margin:0px 0 12px 0;box-sizing:border-box;">
                     <span style="font-size:12pt">
-                        <span style="font-size:12pt">Dear {{object.partner_id .name}}
+                        <span style="font-size:12pt">Dear <t t-out="object.partner_id.name"/>
                             <br/>
                             <br/>Thank you for your purchase!<br/>
-                            <br/>We would like to inform you that your order ({{ object.name }}) is now being processed.
+                            <br/>We would like to inform you that your order (<t t-out="object.name"/>) is now being processed.
                             Please find attached your invoice for reference.
                             <br/>
                             <br/>Here's a summary of your order:
@@ -53,7 +53,6 @@
             <field name="subject">Thank you for your payment</field>
             <field name="body_html" type="html">
                 <p style="margin:0px 0 12px 0;box-sizing:border-box;">
-                    <span style="font-size:12pt">
                         <span style="font-size:12pt">Dear {{object.partner_id .name}}
                             <br/>
                             <br/>Thank you for your payment!<br/>
@@ -76,7 +75,6 @@
                             <br/>Sincerely,
                             <br/>The Morgan Team
                         </span>
-                    </span>
                     <br/>
                 </p>
             </field>
