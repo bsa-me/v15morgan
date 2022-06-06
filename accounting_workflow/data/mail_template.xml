@@ -144,14 +144,14 @@
 
         <field name="subject">Quotation Notification</field>
         <field name="body_html" type="html">
-            <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">
+            <span style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">
                 <strong style="box-sizing:border-box;font-weight:500;">Your Course Quotation</strong>
-            </h3>
+            </span>
             <br/>
-            <h4 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:15.6px;color:#091124;line-height:1.2;font-weight:500;">
+            <span style="margin:0px 0 6px 0;box-sizing:border-box;font-size:15.6px;color:#091124;line-height:1.2;font-weight:500;">
                 <strong style="box-sizing:border-box;font-weight:500;">"Quotation Expiry Date, Quotation Attached"
                 </strong>
-            </h4>
+            </span>
             <br/>
             <span style="font-size:12pt">Dear
                 <t t-out="object.partner_id.name"/>
@@ -159,10 +159,10 @@
             <br/>
             <br/>
             <span style="font-size:12pt">We are happy to share with you a quotation for the following courses :(
-<!--                <t t-foreach="object.order_line" t-as="line">-->
-<!--                    <t t-out="line.name"/>-->
-<!--                    ,-->
-<!--                </t>-->
+                <t t-foreach="object.order_line" t-as="line">
+                    <t t-out="line.name"/>
+                    ,
+                </t>
             </span>
             <span>)</span>
             <span style="font-size:12pt">Please find it attached.</span>
