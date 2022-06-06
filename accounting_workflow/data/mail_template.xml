@@ -152,10 +152,10 @@
                 <strong style="box-sizing:border-box;font-weight:500;">"Quotation Expiry Date, Quotation Attached"
                 </strong>
             </span>
-<!--            <br/>-->
-<!--            <span style="font-size:12pt">Dear-->
-<!--                <t t-out="object.partner_id.name"/>-->
-<!--            </span>-->
+            <br/>
+            <span style="font-size:12pt">Dear
+                <t t-out="object.partner_id.name"/>
+            </span>
 <!--            <br/>-->
 <!--            <br/>-->
 <!--            <span style="font-size:12pt">We are happy to share with you a quotation for the following courses :(-->
