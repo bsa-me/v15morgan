@@ -33,4 +33,14 @@ record.customer_quotation_notification()
         </field>
     </record>
 
+    <record model="base.automation" id="refund_notification_automation">
+        <field name="name">Refund Notification</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="state">code</field>
+        <field name="code">
+record.vendor_refund_notification()
+        </field>
+    </record>
+
 </odoo>

@@ -228,4 +228,92 @@
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
     </record>
+
+
+    <record id="emai_template_refund_notification" model="mail.template">
+        <field name="name">Refund Notification</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Your Refund is being processed</field>
+        <field name="body_html" type="html">
+            <span style="font-size:12pt">Dear <t t-out="object.partner_id.name"/></span>
+            <br/>
+            <span style="font-size:12pt">
+                Thank you for your recent order <t t-out="object.name"/>. We just wanted to let you know that your refund for the following items has been accepted and is now being processed.
+            </span>
+            <br/>
+            <span style="font-size:12pt">
+                Summary of your order:
+            </span>
+            <table class="table table-condensed rtl-table" name="invoice_line_table">
+                <thead>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th class="text-right">Quantity</th>
+                    <th>Unit Price</th>
+                    <th with="15%" class="text-right">Tax Rate</th>
+                    <th>Subtotal</th>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="object.invoice_line_ids" t-as="l">
+                        <td>
+                            <strong>
+                                <span t-field="l.product_id.name"/>
+                            </strong>
+                        </td>
+                        <td>
+                            <t t-if="l.name">
+                                <span t-field="l.name"/>
+                            </t>
+                        </td>
+                        <t t-if="l.move_id.move_type != 'in_refund'">
+                            <td class="text-right">
+                                <span t-field="l.quantity" t-field-options="{&quot;widget&quot;:&quot;integer&quot;}"/>
+                                <span t-field="l.uom_id" groups="product.group_uom"/>
+                            </td>
+                        </t>
+                        <t t-if="l.move_id.move_type != 'in_refund'">
+                            <td class="text-right">
+                                <span t-field="l.price_unit"
+                                      t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: object.currency_id}"/>
+                            </td>
+                        </t>
+                        <t t-if="l.move_id.move_type != 'in_refund'">
+                            <td class="text-right">
+                                <span t-out="', '.join(map(lambda x: (x.description or x.name), l.tax_ids))"/>
+                            </td>
+                        </t>
+                        <td class="text-right" id="subtotal">
+                            <span t-field="l.price_subtotal"
+                                  t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: object.currency_id}"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <span style="font-size:12pt">Please find it attached.</span>
+            <br/>
+            <br/>
+            <br/><span style="font-size:12pt">If you have any questions or would like to discuss further, please feel free to</span>
+            <a href="">
+                contact us
+            </a>
+            <br/>
+            <br/>
+            <span style="font-size:12pt">We hope to hear from you soon!</span>
+            <br/><br/>
+            <span style="font-size:12pt">Thank you for choosing Morgan!</span>
+            <br/>
+            <br/>
+            <span style="font-size:12pt">Sincerely,</span>
+            <br/>
+            <span style="font-size:12pt">The Morgan Team.</span>
+        </field>
+        <field name="report_template" ref="account.account_invoices"/>
+        <field name="report_name">Invoices</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+
 </odoo>
