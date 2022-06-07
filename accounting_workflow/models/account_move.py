@@ -10,6 +10,7 @@ class AccountMove(models.Model):
         self.env['mail.template'].sudo().browse(template.id).send_mail(self.id)
 
     def vendor_refund_notification(self):
+        self.ensure_one()
         template = self.env.ref('accounting_workflow.email_template_refund_notification')
         template.email_to = self.partner_id.email
         self.env['mail.template'].sudo().browse(template.id).send_mail(self.id)
