@@ -150,11 +150,12 @@
             <br/>
             <span style="font-size:12pt">Dear <t t-out="object.partner_id.name"/></span>
             <br/>
-            <span style="font-size:12pt">We are happy to share with you a quotation for the following courses
+            <span style="font-size:12pt">We are happy to share with you a quotation for the following courses(
                    <t t-foreach="object.order_line" t-as="line" data-oe-t-inline="true">
                       <t t-out="line.name"/> ,
                  </t>
            </span>
+            <span>)</span>
             <span style="font-size:12pt">Please find it attached.</span>
             <br/>
             <t t-if="object.payment_term_id">
@@ -170,6 +171,51 @@
             </a>
             <br/>
             <br/>
+            <span style="font-size:12pt">Thank you for choosing Morgan!</span>
+            <br/>
+            <br/>
+            <span style="font-size:12pt">Sincerely,</span>
+            <br/>
+            <span style="font-size:12pt">The Morgan Team.</span>
+        </field>
+        <field name="report_template" ref="sale.action_report_saleorder"/>
+        <field name="report_name">Quotation</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <record id="reminder_expired_date_quotation_notification" model="mail.template">
+        <field name="name">Quotation Expiration Notification</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+
+        <field name="subject">Your Quotation is about to Expire!</field>
+        <field name="body_html" type="html">
+            <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">
+                <strong style="box-sizing:border-box;font-weight:500;">Quotation Expiry Date</strong>
+            </h3>
+            <br/>
+            <h4 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:15.6px;color:#091124;line-height:1.2;font-weight:500;">
+                <strong style="box-sizing:border-box;font-weight:500;">Quotation Attached</strong>
+            </h4>
+            <br/>
+            <span style="font-size:12pt">Dear <t t-out="object.partner_id.name"/></span>
+            <br/>
+            <span style="font-size:12pt">We just wanted to follow up on the most recent quote we sent you, which expires in <t t-out="object.reminder_days"/> days.</span>
+            <span>)</span>
+            <span style="font-size:12pt">Please find it attached.</span>
+            <br/>
+            <br/>
+            <br/><span style="font-size:12pt">If you have any questions or would like to discuss further, please feel free to</span>
+
+
+            <a href="">
+                contact us
+            </a>
+            <br/>
+            <br/>
+            <span style="font-size:12pt">We hope to hear from you soon!</span>
+            <br/><br/>
             <span style="font-size:12pt">Thank you for choosing Morgan!</span>
             <br/>
             <br/>

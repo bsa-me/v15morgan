@@ -25,5 +25,7 @@
     'data': [
         'data/automated_actions.xml',
         'data/mail_template.xml',
+        'data/cron.xml',
+        'views/sale_order.xml',
     ],
 }
