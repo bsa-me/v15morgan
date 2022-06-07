@@ -4,7 +4,7 @@ from odoo import api, fields, models
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    reminder_days = fields.Integer('Expiry Days')
+    reminder_days = fields.Integer('Reminder Days')
 
     def customer_quotation_notification(self):
         template = self.env.ref('accounting_workflow.email_template_quotation_notification')
