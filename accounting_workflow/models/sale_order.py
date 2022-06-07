@@ -4,7 +4,12 @@ from odoo import api, fields, models
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    reminder_days = fields.Integer('Reminder Days')
+    reminder_days = fields.Integer('Reminder Days',
+                                   help='Send notification to the customer before (reminder_days) of'
+                                        'expiration date of quotation,'
+                                        'e.g: if the expiration date 25/12/2022 and reminder_days=3,'
+                                        ' the customer will get notified at 22/12/2022 '
+                                        'that his quote will expire in 3 days')
 
     def customer_quotation_notification(self):
         template = self.env.ref('accounting_workflow.email_template_quotation_notification')
