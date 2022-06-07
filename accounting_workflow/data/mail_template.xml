@@ -230,7 +230,7 @@
     </record>
 
 
-    <record id="emai_template_refund_notification" model="mail.template">
+    <record id="email_template_refund_notification" model="mail.template">
         <field name="name">Refund Notification</field>
         <field name="model_id" ref="account.model_account_move"/>
         <field name="email_from">{{ (user.email_formatted) }}</field>
