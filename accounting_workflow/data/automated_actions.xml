@@ -39,7 +39,7 @@ record.customer_quotation_notification()
         <field name="trigger">on_create_or_write</field>
         <field name="state">code</field>
         <field name="code">
-if record.state == 'posted' and record.move_type == 'in_refund':
+if record.state == 'posted' and record.move_type == 'out_refund':
     record.vendor_refund_notification()
         </field>
     </record>
