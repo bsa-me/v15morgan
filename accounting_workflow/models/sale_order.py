@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
         self.env['mail.template'].sudo().browse(template.id).send_mail(self.id)
 
     def _cron_check_quotation_expiry_days(self):
-        quotations = self.env['sale.order'].search([('state', '=', 'draft'), ('reminder_days', '!=', False)])
+        quotations = self.env['sale.order'].search([('state', '=', 'draft'), ('reminder_days', '>', 0)])
         for rec in quotations:
             if fields.Date.today().day - rec.expiry_date.day <= rec.reminder_days:
                 template = rec.env.ref('accounting_workflow.reminder_expired_date_quotation_notification')
