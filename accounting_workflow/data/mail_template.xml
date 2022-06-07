@@ -261,7 +261,7 @@
             </span>
             <br/>
             <span style="font-size:12pt">
-                Thank you for your recent order<t t-out="object.name"/>. We just wanted to let you know that your refund
+                Thank you for your recent order <t t-out="object.name"/>. We just wanted to let you know that your refund
                 for the following items has been accepted and is now being processed.
             </span>
             <br/>

@@ -5,7 +5,7 @@
         <field name="trigger">on_create_or_write</field>
         <field name="state">code</field>
         <field name="code">
-if record.state == 'post' and record.move_type == 'out_invoice':
+if record.state == 'posted' and record.move_type == 'out_invoice':
   record.customer_invoice_notification()
         </field>
     </record>
@@ -18,7 +18,7 @@ if record.state == 'post' and record.move_type == 'out_invoice':
 
         <field name="state">code</field>
         <field name="code">
-if record.payment_type == 'inbound' and record.partner_type == 'customer' and record.state == 'post':
+if record.payment_type == 'inbound' and record.partner_type == 'customer' and record.state == 'posted':
   record.customer_receipt_notification()
         </field>
     </record>
