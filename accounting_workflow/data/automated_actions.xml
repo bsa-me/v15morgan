@@ -40,7 +40,21 @@ record.customer_quotation_notification()
         <field name="state">code</field>
         <field name="code">
 if record.state == 'posted' and record.move_type == 'out_refund':
-    record.vendor_refund_notification()
+    record.customer_refund_notification()
+        </field>
+    </record>
+
+
+    <record model="base.automation" id="account_creation_notification_automation">
+        <field name="name">Account Creation When Customer Make Order From Website</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="state">code</field>
+        <field name="code">
+order = env['sale.order'].search([('name','=','invoice_origin')],limit=1)
+if order:
+    if record.website_id and order.website_id  and order.state in ['done','sale']:
+        record.customer_account_creation_notification()
         </field>
     </record>
 

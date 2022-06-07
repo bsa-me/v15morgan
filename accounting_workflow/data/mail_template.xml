@@ -265,9 +265,11 @@
                 for the following items has been accepted and is now being processed.
             </span>
             <br/>
+            <br/>
             <span style="font-size:12pt">
                 Summary of your order:
             </span>
+            <br/>
             <table class="table table-condensed rtl-table" name="invoice_line_table">
                 <thead>
                     <th>Item</th>
@@ -289,18 +291,18 @@
                                 <span t-field="l.name"/>
                             </t>
                         </td>
-                        <td class="text-right">
+                        <td>
                             <span t-field="l.quantity" t-field-options="{&quot;widget&quot;:&quot;integer&quot;}"/>
                             <span t-field="l.uom_id" groups="product.group_uom"/>
                         </td>
-                        <td class="text-right">
+                        <td>
                                 <span t-field="l.price_unit"
                                       t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: object.currency_id}"/>
-                            </td>
-                        <td class="text-right">
-                                <span t-out="', '.join(map(lambda x: (x.description or x.name), l.tax_ids))"/>
-                            </td>
-                        <td class="text-right" id="subtotal">
+                        </td>
+                        <td>
+                            <span t-out="', '.join(map(lambda x: (x.description or x.name), l.tax_ids))"/>
+                        </td>
+                        <td id="subtotal">
                             <span t-field="l.price_subtotal"
                                   t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: object.currency_id}"/>
                         </td>
@@ -320,20 +322,30 @@
             </a>
             <br/>
             <br/>
-            <span style="font-size:12pt">We hope to hear from you soon!</span>
-            <br/>
-            <br/>
-            <span style="font-size:12pt">Thank you for choosing Morgan!</span>
-            <br/>
-            <br/>
             <span style="font-size:12pt">Sincerely,</span>
             <br/>
             <span style="font-size:12pt">The Morgan Team.</span>
         </field>
         <field name="report_template" ref="account.account_invoices"/>
-        <field name="report_name">Invoices</field>
+        <field name="report_name">Credit Note</field>
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
+    </record>
+
+    <record id="email_template_account_creation_notification" model="mail.template">
+        <field name="name">Account Creation Notification</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Your Account Has been created</field>
+        <field name="report_template" ref="account.account_invoices"/>
+        <field name="report_name">Invoice</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <span style="font-size:12pt">
+                Your Account Has been created, Please find attached your invoice for reference.
+            </span>
+        </field>
     </record>
 
 
