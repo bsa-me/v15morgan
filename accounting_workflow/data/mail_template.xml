@@ -450,19 +450,19 @@
             <span>Dear
                 <t t-out="ctx['partner_name'] or ''"/>
             </span>
-<!--            <br/>-->
-<!--            <br/>-->
-<!--            Your next payment is due!-->
-<!--            <br/>-->
-<!--            <br/>-->
-<!--            <span>We just wanted to drop you a quick note to remind you that </span> <t t-out="ctx['amount'] or ''"/> owed on-->
-<!--            <t t-out="ctx['partner_name'] or ''"/>-->
-<!--            <span>in respect of our invoice</span>-->
-<!--            <t t-out="ctx['invoice_number'] or ''"/>-->
-<!--            <span>is due for payment on</span>-->
-<!--            <t t-out="ctx['due_date'] or ''"/>.-->
-<!--            <br/>-->
-<!--            <br/>-->
+            <br/>
+            <br/>
+            Your next payment is due!
+            <br/>
+            <br/>
+            <span>We just wanted to drop you a quick note to remind you that </span> <t t-out="ctx['amount'] or ''"/> <span>owed on </span>
+            <t t-out="ctx['partner_name'] or ''"/>
+            <span>in respect of our invoice</span>
+            <t t-out="ctx['invoice_number'] or ''"/>
+            <span>is due for payment on</span>
+            <t t-out="ctx['due_date'] or ''"/>.
+            <br/>
+            <br/>
 <!--            <span>Please note that if you fail to make the payment on the scheduled date, a penalty fee will be added to-->
 <!--                your balance.-->
 <!--            </span>-->
