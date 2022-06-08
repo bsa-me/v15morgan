@@ -5,6 +5,8 @@ import base64
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    payment_reminder_days = fields.Integer('Payment Reminder Days', default=5, required=1)
+
     def customer_invoice_notification(self):
         template = self.env.ref('accounting_workflow.email_template_invoice_notification')
         template.email_to = self.partner_id.email
@@ -83,3 +85,25 @@ class AccountMove(models.Model):
         }
         data_id = self.env['ir.attachment'].create(ir_values)
         return data_id.id if data_id else False
+
+    def _cron_future_payment_reminder(self):
+        invoices = self.env['account.move'].search(
+            [('move_type', '=', 'out_invoice'), ('state', '=', 'posted'), ('payment_state', '!=', 'paid'),
+             ('amount_residual', '!=', 0)])
+        for rec in invoices:
+            for line in rec.line_ids:
+                reminder_before_days = line.date_maturity.days - fields.Date.today().day
+                if reminder_before_days == rec.payment_reminder_days and not line.reconciled:
+                    self.send_payment_reminder_to_customer(rec, line.date_maturity,
+                                                           line.amount_currency)
+
+    def send_payment_reminder_to_customer(self, invoice, due_date, amount):
+        email_template = self.env.ref('accounting_workflow.email_template_invoice_notification')
+        email_template.email_to = invoice.partner_id.email
+        email_context = {
+            'due_date': due_date,
+            'amount': amount,
+            'invoice_number': invoice.name,
+            'partner_name': invoice.partner_id.name,
+        }
+        self.env['mail.template'].sudo().browse(email_template.id).with_context(email_context).send_mail(self.id)

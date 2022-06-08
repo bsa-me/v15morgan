@@ -105,8 +105,7 @@
                     <br/>Thank you for your payment!
                     <br/>
                     <br/>We just wanted to let you know that your payment for the following amount (
-                    <t
-                            t-out="object.amount"/>
+                    <t t-out="object.amount"/>
                     <t t-out="object.currency_id.name"/>
                     ) has been successful.
                     Please find your receipt (<t t-out="object.name"/>) attached.
@@ -437,6 +436,45 @@
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
             <span>Your payment is accepted, please find the attached invoice and payment reports</span>
+        </field>
+    </record>
+
+    <record id="email_template_future_payment_reminder_before" model="mail.template">
+        <field name="name">Future Payment Reminder Before</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Your Next Payment</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <span>Dear
+                <t t-out="ctx['partner_name']"/>
+            </span>
+            <br/>
+            <br/>
+            Your next payment is due!
+            <br/>
+            <br/>
+            <span>We just wanted to drop you a quick note to remind you that <t t-out="ctx['amount']"/> owed on</span>
+            <t t-out="ctx['partner_name']"/>
+            <span>in respect of our invoice</span>
+            <t t-out="ctx['invoice_number']"/>
+            <span>is due for payment on</span>
+            <t t-out="ctx['due_date']"/>.
+            <br/>
+            <br/>
+            <span>Please note that if you fail to make the payment on the scheduled date, a penalty fee will be added to
+                your balance.
+            </span>
+            <br/>
+            <br/>
+            <span>If you have any questions on the above, don't hesitate to</span>
+            <a href="">contact us</a>
+            <br/>
+            <br/>
+            <span>Sincerely,</span>
+            <br/>
+            <span>The Morgan Team</span>
         </field>
     </record>
 
