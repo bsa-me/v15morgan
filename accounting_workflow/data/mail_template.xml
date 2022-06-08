@@ -456,27 +456,27 @@
             <br/>
             <br/>
             <span> We just wanted to drop you a quick note to remind you that </span>
-<!--            <t t-out="ctx['amount'] or ''"/>-->
-<!--            <span> owed on </span>-->
-<!--            <t t-out="ctx['partner_name'] or ''"/>-->
-<!--            <span>in respect of our invoice </span>-->
-<!--            <t t-out="ctx['invoice_number'] or ''"/>-->
-<!--            <span>is due for payment on </span>-->
-<!--            <t t-out="ctx['due_date'] or ''"/>.-->
-<!--            <br/>-->
-<!--            <br/>-->
-<!--            <span>Please note that if you fail to make the payment on the scheduled date, a penalty fee will be added to-->
-<!--                your balance.-->
-<!--            </span>-->
-<!--            <br/>-->
-<!--            <br/>-->
-<!--            <span>If you have any questions on the above, don't hesitate to </span>-->
-<!--            <a href="">contact us</a>-->
-<!--            <br/>-->
-<!--            <br/>-->
-<!--            <span>Sincerely,</span>-->
-<!--            <br/>-->
-<!--            <span>The Morgan Team</span>-->
+            <t t-out="ctx['amount'] or ''"/>
+            <span> owed on </span>
+            <t t-out="ctx['partner_name'] or ''"/>
+            <span>in respect of our invoice </span>
+            <t t-out="ctx['invoice_number'] or ''"/>
+            <span>is due for payment on </span>
+            <t t-out="ctx['due_date'] or ''"/>.
+            <br/>
+            <br/>
+            <span>Please note that if you fail to make the payment on the scheduled date, a penalty fee will be added to
+                your balance.
+            </span>
+            <br/>
+            <br/>
+            <span>If you have any questions on the above, don't hesitate to </span>
+            <a href="">contact us</a>
+            <br/>
+            <br/>
+            <span>Sincerely,</span>
+            <br/>
+            <span>The Morgan Team</span>
         </field>
     </record>
 
