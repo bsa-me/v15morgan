@@ -448,7 +448,7 @@
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
             <span>Dear
-                <t t-out="ctx['partner_name']"/>
+                <t t-out="ctx['partner_name'] or ''"/>
             </span>
             <br/>
             <br/>
