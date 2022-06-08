@@ -46,7 +46,7 @@ class AccountMove(models.Model):
         payment = self.env['account.payment'].search([('ref', '=', self.payment_reference)], limit=1)
 
         # related invoice report
-        data_invoice_id = self.generate_invoice_pdf(self.id)
+        data_invoice_id = self.generate_invoice_pdf()
         if data_invoice_id:
             data_ids.append(data_invoice_id)
         # payment report of invoice related to SO
