@@ -21,10 +21,11 @@ class AccountMove(models.Model):
         self.env['mail.template'].sudo().browse(template.id).send_mail(self.id)
 
     def customer_account_creation_notification(self):
-        template = self.env.ref('accounting_workflow.email_template_account_creation_notification')
-        template.email_to = self.partner_id.email
-        report_template_id = template.render_qweb_pdf(self.id)
-        data_record = base64.b64encode(report_template_id[0])
+        email_template = self.env.ref('accounting_workflow.email_template_account_creation_notification')
+        email_template.email_to = self.partner_id.email
+
+        report_id = self.env.ref('account.account_invoices')._render_qweb_pdf(self.id)
+        data_record = base64.b64encode(report_id[0])
         ir_values = {
             'name': "Customer Invoice",
             'type': 'binary',
@@ -33,5 +34,6 @@ class AccountMove(models.Model):
             'mimetype': 'application/x-pdf',
         }
         data_id = self.env['ir.attachment'].create(ir_values)
-        template.attachment_ids = [(6, 0, [data_id.id])]
-        self.env['mail.template'].sudo().browse(template.id).send_mail(self.id)
+
+        email_template.attachment_ids = [(6, 0, [data_id.id])]
+        self.env['mail.template'].sudo().browse(email_template.id).send_mail(self.id)

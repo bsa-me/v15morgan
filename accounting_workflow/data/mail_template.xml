@@ -138,7 +138,7 @@
         <field name="model_id" ref="sale.model_sale_order"/>
         <field name="email_from">{{ (user.email_formatted) }}</field>
 
-        <field name="subject">Quotation Notification</field>
+        <field name="subject">Your Course Quotation</field>
         <field name="body_html" type="html">
             <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">
                 <strong style="box-sizing:border-box;font-weight:500;">Your Course Quotation</strong>
@@ -249,7 +249,6 @@
         <field name="auto_delete" eval="True"/>
     </record>
 
-
     <record id="email_template_refund_notification" model="mail.template">
         <field name="name">Refund Notification</field>
         <field name="model_id" ref="account.model_account_move"/>
@@ -348,7 +347,6 @@
         </field>
     </record>
 
-
     <record id="email_template_credit_note_finalizing_notification" model="mail.template">
         <field name="name">Credit Note Finalizing Notification</field>
         <field name="model_id" ref="account.model_account_move"/>
@@ -359,14 +357,18 @@
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
-            <span>Dear <t t-out="object.partner_id.name"/></span>
+            <span>Dear
+                <t t-out="object.partner_id.name"/>
+            </span>
             <br/>
             <br/>
             <span>Thank you for your purchase!</span>
             <br/>
             <br/>
             <p>
-                We would like to inform you that your order <t t-out="object.name"/> is now being processed. Please
+                We would like to inform you that your order
+                <t t-out="object.name"/>
+                is now being processed. Please
                 find attached your invoice for reference.
             </p>
             <br/>
@@ -423,6 +425,18 @@
             <br/>
             <br/>
             <span>Sincerely, The Morgan Team</span>
+        </field>
+    </record>
+
+    <record id="email_template_payment_acceptance_notification" model="mail.template">
+        <field name="name">Payment Acceptance</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Your payment is accepted</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+
         </field>
     </record>
 
