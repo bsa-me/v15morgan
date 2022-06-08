@@ -452,10 +452,10 @@
             </span>
             <br/>
             <br/>
-            Your next payment is due!
+            <span>Your next payment is due!</span>
             <br/>
             <br/>
-            <span>We just wanted to drop you a quick note to remind you that </span>
+            <span> We just wanted to drop you a quick note to remind you that </span>
 <!--            <t t-out="ctx['amount'] or ''"/>-->
 <!--            <span> owed on </span>-->
 <!--            <t t-out="ctx['partner_name'] or ''"/>-->
