@@ -436,7 +436,7 @@
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
-
+            <span>Your payment is accepted, please find the attached invoice and payment reports</span>
         </field>
     </record>
 
