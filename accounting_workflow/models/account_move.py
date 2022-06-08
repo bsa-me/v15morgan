@@ -49,6 +49,7 @@ class AccountMove(models.Model):
         data_invoice_id = self.generate_invoice_pdf()
         if data_invoice_id:
             data_ids.append(data_invoice_id)
+
         # payment report of invoice related to SO
         data_payment_id = self.generate_payment_pdf(payment)
         if data_payment_id:
