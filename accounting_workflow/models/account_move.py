@@ -15,6 +15,11 @@ class AccountMove(models.Model):
         template.email_to = self.partner_id.email
         self.env['mail.template'].sudo().browse(template.id).send_mail(self.id)
 
+    def customer_credit_note_notification(self):
+        template = self.env.ref('accounting_workflow.email_template_credit_note_finalizing_notification')
+        template.email_to = self.partner_id.email
+        self.env['mail.template'].sudo().browse(template.id).send_mail(self.id)
+
     def customer_account_creation_notification(self):
         template = self.env.ref('accounting_workflow.email_template_account_creation_notification')
         template.email_to = self.partner_id.email

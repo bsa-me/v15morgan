@@ -41,6 +41,7 @@ record.customer_quotation_notification()
         <field name="code">
 if record.state == 'posted' and record.move_type == 'out_refund':
     record.customer_refund_notification()
+    record.customer_credit_note_notification()
         </field>
     </record>
 
