@@ -456,8 +456,8 @@
             <br/>
             <br/>
             <span>We just wanted to drop you a quick note to remind you that </span>
-            <t t-out="ctx['amount'] or ''"/>
-            <span> owed on </span>
+<!--            <t t-out="ctx['amount'] or ''"/>-->
+<!--            <span> owed on </span>-->
 <!--            <t t-out="ctx['partner_name'] or ''"/>-->
 <!--            <span>in respect of our invoice </span>-->
 <!--            <t t-out="ctx['invoice_number'] or ''"/>-->
