@@ -25,7 +25,7 @@ class ReportAccountAgedPartner(models.AbstractModel):
                 account.code AS account_code,""" + ','.join([("""
                 CASE WHEN period_table.period_index = {i}
                 THEN %(sign)s * ROUND((
-                    account_move_line.balance, 0)
+                    account_move_line.balance
                 ) * currency_table.rate, currency_table.precision)
                 ELSE 0 END AS period{i}""").format(i=i) for i in range(6)]) + """
             FROM account_move_line
