@@ -13,7 +13,6 @@ class ReportAccountAgedPartner(models.AbstractModel):
                 account_move_line.amount_currency as amount_currency,
                 account_move_line.partner_id AS partner_id,
                 partner.name AS partner_name,
-                move.name AS move_name,
                 COALESCE(trust_property.value_text, 'normal') AS partner_trust,
                 COALESCE(account_move_line.currency_id, journal.currency_id) AS report_currency_id,
                 account_move_line.payment_id AS payment_id,
