@@ -52,7 +52,7 @@ class ReportAccountAgedPartner(models.AbstractModel):
             AND account.exclude_from_aged_reports IS NOT TRUE
             GROUP BY account_move_line.id, partner.id, trust_property.id, journal.id, move.id, account.id,
                      period_table.period_index, currency_table.rate, currency_table.precision
-            HAVING ROUND(account_move_line.balance) != 0
+            HAVING ROUND(account_move_line.move_id.amount_residual) != 0
         """).format(
             move_line_fields=self._get_move_line_fields('account_move_line'),
             currency_table=self.env['res.currency']._get_query_currency_table(options),
