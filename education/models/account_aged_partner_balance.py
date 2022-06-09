@@ -1,7 +1,7 @@
 from odoo import models, fields
 
 
-class ReportAccountAgedPartner(models.Model):
+class ReportAccountAgedPartner(models.AbstractModel):
     _inherit = "account.aged.partner"
 
     @api.model
