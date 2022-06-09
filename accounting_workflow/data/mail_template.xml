@@ -480,5 +480,23 @@
         </field>
     </record>
 
+    <record id="email_template_future_payment_reminder_after" model="mail.template">
+        <field name="name">Future Payment Reminder After</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Past Payment Due</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <span>If you have any questions on the above, don't hesitate to </span>
+            <a href="">contact us</a>
+            <br/>
+            <br/>
+            <span>Sincerely,</span>
+            <br/>
+            <span>The Morgan Team</span>
+        </field>
+    </record>
+
 
 </odoo>
