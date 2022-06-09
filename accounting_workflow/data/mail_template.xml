@@ -105,8 +105,7 @@
                     <br/>Thank you for your payment!
                     <br/>
                     <br/>We just wanted to let you know that your payment for the following amount (
-                    <t
-                            t-out="object.amount"/>
+                    <t t-out="object.amount"/>
                     <t t-out="object.currency_id.name"/>
                     ) has been successful.
                     Please find your receipt (<t t-out="object.name"/>) attached.
@@ -138,7 +137,7 @@
         <field name="model_id" ref="sale.model_sale_order"/>
         <field name="email_from">{{ (user.email_formatted) }}</field>
 
-        <field name="subject">Quotation Notification</field>
+        <field name="subject">Your Course Quotation</field>
         <field name="body_html" type="html">
             <h3 style="margin:0px 0 6px 0;box-sizing:border-box;font-size:16.9px;color:#091124;line-height:1.2;font-weight:500;">
                 <strong style="box-sizing:border-box;font-weight:500;">Your Course Quotation</strong>
@@ -249,7 +248,6 @@
         <field name="auto_delete" eval="True"/>
     </record>
 
-
     <record id="email_template_refund_notification" model="mail.template">
         <field name="name">Refund Notification</field>
         <field name="model_id" ref="account.model_account_move"/>
@@ -261,7 +259,7 @@
             </span>
             <br/>
             <span style="font-size:12pt">
-                Thank you for your recent order <t t-out="object.name"/>. We just wanted to let you know that your refund
+                Thank you for your recent order<t t-out="object.name"/>. We just wanted to let you know that your refund
                 for the following items has been accepted and is now being processed.
             </span>
             <br/>
@@ -296,8 +294,8 @@
                             <span t-field="l.uom_id" groups="product.group_uom"/>
                         </td>
                         <td>
-                                <span t-field="l.price_unit"
-                                      t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: object.currency_id}"/>
+                            <span t-field="l.price_unit"
+                                  t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: object.currency_id}"/>
                         </td>
                         <td>
                             <span t-out="', '.join(map(lambda x: (x.description or x.name), l.tax_ids))"/>
@@ -345,6 +343,173 @@
             <span style="font-size:12pt">
                 Your Account Has been created, Please find attached your invoice for reference.
             </span>
+        </field>
+    </record>
+
+    <record id="email_template_credit_note_finalizing_notification" model="mail.template">
+        <field name="name">Credit Note Finalizing Notification</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Thank you for your purchase</field>
+        <field name="report_template" ref="account.account_invoices"/>
+        <field name="report_name">Credit Note</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <span>Dear
+                <t t-out="object.partner_id.name"/>
+            </span>
+            <br/>
+            <br/>
+            <span>Thank you for your purchase!</span>
+            <br/>
+            <br/>
+            <p>
+                We would like to inform you that your order
+                <t t-out="object.name"/>
+                is now being processed. Please
+                find attached your invoice for reference.
+            </p>
+            <br/>
+            <span>Here's a summary of your order:</span>
+            <table class="table table-condensed rtl-table" name="invoice_line_table">
+                <thead>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th with="15%" class="text-right">Tax Rate</th>
+                    <th>Subtotal</th>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="object.invoice_line_ids" t-as="l">
+                        <td>
+                            <strong>
+                                <span t-field="l.product_id.name"/>
+                            </strong>
+                        </td>
+                        <td>
+                            <t t-if="l.name">
+                                <span t-field="l.name"/>
+                            </t>
+                        </td>
+                        <td>
+                            <span t-field="l.quantity" t-field-options="{&quot;widget&quot;:&quot;integer&quot;}"/>
+                            <span t-field="l.uom_id" groups="product.group_uom"/>
+                        </td>
+                        <td>
+                            <span t-field="l.price_unit"
+                                  t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: object.currency_id}"/>
+                        </td>
+                        <td>
+                            <span t-out="', '.join(map(lambda x: (x.description or x.name), l.tax_ids))"/>
+                        </td>
+                        <td id="subtotal">
+                            <span t-field="l.price_subtotal"
+                                  t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: object.currency_id}"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <br/>
+            <span>If you have any questions regarding your purchase, please feel free to</span>
+            <a href="">
+                contact us
+            </a>
+            <span>.</span>
+            <br/>
+            <br/>
+            <span>Thank you for choosing Morgan!</span>
+            <br/>
+            <br/>
+            <span>Sincerely, The Morgan Team</span>
+        </field>
+    </record>
+
+    <record id="email_template_payment_acceptance_notification" model="mail.template">
+        <field name="name">Payment Acceptance</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Your payment is accepted</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <span>Your payment is accepted, please find the attached invoice and payment reports</span>
+        </field>
+    </record>
+
+    <record id="email_template_future_payment_reminder_before" model="mail.template">
+        <field name="name">Future Payment Reminder Before</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Your Next Payment</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        <t t-out="ctx['partner_name'] or ''"/>
+        <br/>
+        <br/>
+        Your next payment is due!
+        <br/>
+        <br/>
+        We just wanted to drop you a quick note to remind you that
+        <t t-out="ctx['amount'] or ''"/>
+        owed on
+        <t t-out="ctx['partner_name'] or ''"/>
+        in respect of our invoice
+        <t t-out="ctx['invoice_number'] or ''"/>
+        is due for payment on<t t-out="ctx['due_date'] or ''"/>.
+        <br/>
+        <br/>
+        Please note that if you fail to make the payment on the scheduled date, a penalty fee will be added
+        to
+        your balance.
+        <br/>
+        <br/>
+        If you have any questions on the above, don't hesitate to
+        <a href="">contact us</a>
+        <br/>
+        <br/>
+        Sincerely,
+        <br/>
+        The Morgan Team
+    </p>
+</div>
+        </field>
+    </record>
+
+    <record id="email_template_future_payment_reminder_after" model="mail.template">
+        <field name="name">Future Payment Reminder After</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="email_from">{{ (user.email_formatted) }}</field>
+        <field name="subject">Past Payment Due</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear <t t-out="ctx['partner_name'] or ''"/>
+        <br/>
+        <br/>
+        Your next payment is overdue!
+        <br/><br/>
+        We just wanted to drop you a quick note to remind you that <t t-out="ctx['amount'] or ''"/> owed on <t t-out="ctx['partner_name'] or ''"/> in respect of our invoice <t t-out="ctx['invoice_number'] or ''"/> is still pending.
+        <br/><br/>
+        Your new balance is (insert amount with penalty).
+        <br/><br/>
+        We appreciate your prompt action on the matter.
+        <br/><br/>
+        If you have any questions or would like to discuss this further, please feel free to contact us.
+        <br/><br/>
+        Sincerely,
+        <br/>
+        The Morgan Team
+    </p>
+</div>
         </field>
     </record>
 

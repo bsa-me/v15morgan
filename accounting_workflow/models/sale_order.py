@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+import base64
 
 
 class SaleOrder(models.Model):

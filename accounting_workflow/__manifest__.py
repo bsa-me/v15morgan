@@ -27,5 +27,6 @@
         'data/mail_template.xml',
         'data/cron.xml',
         'views/sale_order.xml',
+        'views/account_move.xml',
     ],
 }
