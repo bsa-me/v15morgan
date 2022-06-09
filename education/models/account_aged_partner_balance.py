@@ -25,7 +25,7 @@ class ReportAccountAgedPartner(models.AbstractModel):
                 account.code AS account_code,""" + ','.join([("""
                 CASE WHEN period_table.period_index = {i}
                 THEN %(sign)s * ROUND((
-                    account_move_line.balance), 0)
+                    account_move_line.balance, 0)
                 ) * currency_table.rate, currency_table.precision)
                 ELSE 0 END AS period{i}""").format(i=i) for i in range(6)]) + """
             FROM account_move_line
@@ -39,7 +39,7 @@ class ReportAccountAgedPartner(models.AbstractModel):
                 AND trust_property.company_id = account_move_line.company_id
             )
             JOIN {currency_table} ON currency_table.company_id = account_move_line.company_id
-
+            
             JOIN {period_table} ON (
                 period_table.date_start IS NULL
                 OR COALESCE(account_move_line.date_maturity, account_move_line.date) <= DATE(period_table.date_start)
