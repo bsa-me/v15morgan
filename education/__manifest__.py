@@ -115,6 +115,7 @@
         'views/event_sale_configurator.xml',
         'wizard/account_move_reversal.xml',
         'wizard/event_transfer_dropout.xml',
+        'wizard/account_payment_register.xml',
         'views/event_registration.xml',
         #'views/survey_answer.xml',
         'views/stock_picking.xml',
