@@ -7,8 +7,8 @@
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='invoice_date']" position="after">
-                <field name="payment_reminder_days_before" attrs="{'invisible':[('move_type','=','out_invoice')], 'required':[('move_type','=','out_invoice')]}"/>
-                <field name="payment_reminder_days_after" attrs="{'invisible':[('move_type','=','out_invoice')], 'required':[('move_type','=','out_invoice')]}"/>
+                <field name="payment_reminder_days_before" attrs="{'invisible':[('move_type','!=','out_invoice')], 'required':[('move_type','=','out_invoice')]}"/>
+                <field name="payment_reminder_days_after" attrs="{'invisible':[('move_type','!=','out_invoice')], 'required':[('move_type','=','out_invoice')]}"/>
             </xpath>
 
         </field>
