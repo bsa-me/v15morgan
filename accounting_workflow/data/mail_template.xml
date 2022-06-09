@@ -447,36 +447,38 @@
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
-            <span>Dear
-                <t t-out="ctx['partner_name'] or ''"/>
-            </span>
-            <br/>
-            <br/>
-            <span>Your next payment is due!</span>
-            <br/>
-            <br/>
-            <span> We just wanted to drop you a quick note to remind you that </span>
-            <t t-out="ctx['amount'] or ''"/>
-            <span> owed on </span>
-            <t t-out="ctx['partner_name'] or ''"/>
-            <span>in respect of our invoice </span>
-            <t t-out="ctx['invoice_number'] or ''"/>
-            <span>is due for payment on </span>
-            <t t-out="ctx['due_date'] or ''"/>.
-            <br/>
-            <br/>
-            <span>Please note that if you fail to make the payment on the scheduled date, a penalty fee will be added to
-                your balance.
-            </span>
-            <br/>
-            <br/>
-            <span>If you have any questions on the above, don't hesitate to </span>
-            <a href="">contact us</a>
-            <br/>
-            <br/>
-            <span>Sincerely,</span>
-            <br/>
-            <span>The Morgan Team</span>
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        <t t-out="ctx['partner_name'] or ''"/>
+        <br/>
+        <br/>
+        Your next payment is due!
+        <br/>
+        <br/>
+        We just wanted to drop you a quick note to remind you that
+        <t t-out="ctx['amount'] or ''"/>
+        owed on
+        <t t-out="ctx['partner_name'] or ''"/>
+        in respect of our invoice
+        <t t-out="ctx['invoice_number'] or ''"/>
+        is due for payment on<t t-out="ctx['due_date'] or ''"/>.
+        <br/>
+        <br/>
+        Please note that if you fail to make the payment on the scheduled date, a penalty fee will be added
+        to
+        your balance.
+        <br/>
+        <br/>
+        If you have any questions on the above, don't hesitate to
+        <a href="">contact us</a>
+        <br/>
+        <br/>
+        Sincerely,
+        <br/>
+        The Morgan Team
+    </p>
+</div>
         </field>
     </record>
 
@@ -488,13 +490,11 @@
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
-            <span>If you have any questions on the above, don't hesitate to </span>
-            <a href="">contact us</a>
-            <br/>
-            <br/>
-            <span>Sincerely,</span>
-            <br/>
-            <span>The Morgan Team</span>
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+    </p>
+</div>
         </field>
     </record>
 
