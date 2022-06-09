@@ -93,10 +93,11 @@ class AccountMove(models.Model):
              ('amount_residual', '!=', 0)])
         for rec in invoices:
             for line in rec.line_ids:
-                reminder_days = line.date_maturity.days - fields.Date.today().day
-                if reminder_days == rec.payment_reminder_days_before and not line.reconciled:
-                    self.send_payment_reminder_to_customer(rec, line.date_maturity,
-                                                           line.amount_currency, 'before')
+                if line.date_maturity and line.account_id.user_type_id.name == 'Receivable':
+                    reminder_days = line.date_maturity.days - fields.Date.today().day
+                    if reminder_days == rec.payment_reminder_days_before and not line.reconciled:
+                        self.send_payment_reminder_to_customer(rec, line.date_maturity,
+                                                               line.amount_currency, 'before')
 
     def _cron_past_payment_reminder(self):
         invoices = self.env['account.move'].search(
@@ -104,10 +105,11 @@ class AccountMove(models.Model):
              ('amount_residual', '!=', 0)])
         for rec in invoices:
             for line in rec.line_ids:
-                reminder_days = fields.Date.today().day - line.date_maturity.days
-                if reminder_days == rec.payment_reminder_days_after and not line.reconciled:
-                    self.send_payment_reminder_to_customer(rec, line.date_maturity,
-                                                           line.amount_currency, 'after')
+                if line.date_maturity and line.account_id.user_type_id.name == 'Receivable':
+                    reminder_days = fields.Date.today().day - line.date_maturity.days
+                    if reminder_days == rec.payment_reminder_days_after and not line.reconciled:
+                        self.send_payment_reminder_to_customer(rec, line.date_maturity,
+                                                               line.amount_currency, 'after')
 
     def send_payment_reminder_to_customer(self, invoice, due_date, amount, reminder_type):
         if reminder_type == 'before':
