@@ -16,6 +16,7 @@ for reg in registrations:
   template.send_mail(record.ids[0], force_send=True)
 		</field>
 	</record>
+	
 
 	<record id="congratulation_attempt_action" model="base.automation">
 		<field name="name">Congratulation email</field>

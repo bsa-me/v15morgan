@@ -49,10 +49,10 @@ class Attempt(models.Model):
 
     
     def _compute_attempt_number(self):
-       for record in self:
-        attempts = self.search([('registration_id','=',record.registration_id.id),('id','<',record.id)])
-       	count = len(attempts) + 1 if len(attempts) > 0 else 1
-       	record['name'] = str(++count)
+        for record in self:
+            attempts = self.search([('registration_id','=',record.registration_id.id),('id','<',record.id)])
+            count = len(attempts) + 1 if len(attempts) > 0 else 1
+            record['name'] = str(++count)
 
     @api.model
     def create(self, vals):
