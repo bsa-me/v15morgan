@@ -88,34 +88,32 @@ class AccountMove(models.Model):
         return data_id.id if data_id else False
 
     def _cron_future_payment_reminder(self):
-        fmt_1 = '%Y-%m-%d'
-        fmt_2 = '%m/%d/%Y'
+        fmt = '%Y-%m-%d'
         today_date = datetime.now().strftime('%Y-%m-%d')
-        d1 = datetime.strptime(str(today_date), fmt_1)
+        d1 = datetime.strptime(str(today_date), fmt)
         invoices = self.env['account.move'].search(
             [('move_type', '=', 'out_invoice'), ('state', '=', 'posted'), ('payment_state', '!=', 'paid'),
              ('amount_residual', '!=', 0)])
         for rec in invoices:
             for line in rec.line_ids:
                 if line.date_maturity and line.account_id.user_type_id.name == 'Receivable':
-                    d2 = datetime.strptime(str(line.date_maturity), fmt_2)
+                    d2 = datetime.strptime(str(line.date_maturity), fmt)
                     reminder_days = (d2-d1).days
                     if reminder_days == rec.payment_reminder_days_before and not line.reconciled:
                         self.send_payment_reminder_to_customer(rec, line.date_maturity,
                                                                line.amount_currency, 'before')
 
     def _cron_past_payment_reminder(self):
-        fmt_1 = '%Y-%m-%d'
-        fmt_2 = '%m/%d/%Y'
+        fmt = '%Y-%m-%d'
         today_date = datetime.now().strftime('%Y-%m-%d')
-        d1 = datetime.strptime(str(today_date), fmt_1)
+        d1 = datetime.strptime(str(today_date), fmt)
         invoices = self.env['account.move'].search(
             [('move_type', '=', 'out_invoice'), ('state', '=', 'posted'), ('payment_state', '!=', 'paid'),
              ('amount_residual', '!=', 0)])
         for rec in invoices:
             for line in rec.line_ids:
                 if line.date_maturity and line.account_id.user_type_id.name == 'Receivable':
-                    d2 = datetime.strptime(str(line.date_maturity), fmt_2)
+                    d2 = datetime.strptime(str(line.date_maturity), fmt)
                     reminder_days = (d1-d2).days
                     if reminder_days == rec.payment_reminder_days_after and not line.reconciled:
                         self.send_payment_reminder_to_customer(rec, line.date_maturity,
