@@ -2,11 +2,12 @@ from odoo import api, fields, models, _
 import base64
 from datetime import datetime
 
+
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    payment_reminder_days_before = fields.Integer('Payment Reminder Days Before', default=5, required=1)
-    payment_reminder_days_after = fields.Integer('Payment Reminder Days After', default=5, required=1)
+    payment_reminder_days_before = fields.Integer('Payment Reminder Days Before', default=5)
+    payment_reminder_days_after = fields.Integer('Payment Reminder Days After', default=5)
 
     def customer_invoice_notification(self):
         template = self.env.ref('accounting_workflow.email_template_invoice_notification')
@@ -98,7 +99,7 @@ class AccountMove(models.Model):
             for line in rec.line_ids:
                 if line.date_maturity and line.account_id.user_type_id.name == 'Receivable':
                     d2 = datetime.strptime(str(line.date_maturity), fmt)
-                    reminder_days = (d2-d1).days
+                    reminder_days = (d2 - d1).days
                     if reminder_days == rec.payment_reminder_days_before and not line.reconciled:
                         self.send_payment_reminder_to_customer(rec, line.date_maturity,
                                                                line.amount_currency, 'before')
@@ -114,7 +115,7 @@ class AccountMove(models.Model):
             for line in rec.line_ids:
                 if line.date_maturity and line.account_id.user_type_id.name == 'Receivable':
                     d2 = datetime.strptime(str(line.date_maturity), fmt)
-                    reminder_days = (d1-d2).days
+                    reminder_days = (d1 - d2).days
                     if reminder_days == rec.payment_reminder_days_after and not line.reconciled:
                         self.send_payment_reminder_to_customer(rec, line.date_maturity,
                                                                line.amount_currency, 'after')
