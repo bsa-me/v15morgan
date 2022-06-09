@@ -492,7 +492,22 @@
         <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
-        Dear
+        Dear <t t-out="ctx['partner_name'] or ''"/>
+        <br/>
+        <br/>
+        Your next payment is overdue!
+        <br/><br/>
+        We just wanted to drop you a quick note to remind you that <t t-out="ctx['amount'] or ''"/> owed on <t t-out="ctx['partner_name'] or ''"/> in respect of our invoice <t t-out="ctx['invoice_number'] or ''"/> is still pending.
+        <br/><br/>
+        Your new balance is (insert amount with penalty).
+        <br/><br/>
+        We appreciate your prompt action on the matter.
+        <br/><br/>
+        If you have any questions or would like to discuss this further, please feel free to contact us.
+        <br/><br/>
+        Sincerely,
+        <br/>
+        The Morgan Team
     </p>
 </div>
         </field>

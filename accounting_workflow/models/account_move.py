@@ -96,15 +96,39 @@ class AccountMove(models.Model):
                 reminder_days = line.date_maturity.days - fields.Date.today().day
                 if reminder_days == rec.payment_reminder_days_before and not line.reconciled:
                     self.send_payment_reminder_to_customer(rec, line.date_maturity,
-                                                           line.amount_currency)
+                                                           line.amount_currency, 'before')
 
-    def send_payment_reminder_to_customer(self, invoice, due_date, amount):
-        email_template = self.env.ref('accounting_workflow.email_template_invoice_notification')
-        email_template.email_to = invoice.partner_id.email
-        email_context = {
-            'due_date': due_date,
-            'amount': amount,
-            'invoice_number': invoice.name,
-            'partner_name': invoice.partner_id.name,
-        }
-        self.env['mail.template'].sudo().browse(email_template.id).with_context(email_context).send_mail(self.id)
+    def _cron_past_payment_reminder(self):
+        invoices = self.env['account.move'].search(
+            [('move_type', '=', 'out_invoice'), ('state', '=', 'posted'), ('payment_state', '!=', 'paid'),
+             ('amount_residual', '!=', 0)])
+        for rec in invoices:
+            for line in rec.line_ids:
+                reminder_days = fields.Date.today().day - line.date_maturity.days
+                if reminder_days == rec.payment_reminder_days_after and not line.reconciled:
+                    self.send_payment_reminder_to_customer(rec, line.date_maturity,
+                                                           line.amount_currency, 'after')
+
+    def send_payment_reminder_to_customer(self, invoice, due_date, amount, reminder_type):
+        if reminder_type == 'before':
+            email_template = self.env.ref('accounting_workflow.email_template_future_payment_reminder_before')
+            email_template.email_to = invoice.partner_id.email
+
+            email_context = {
+                'due_date': due_date,
+                'amount': amount,
+                'invoice_number': invoice.name,
+                'partner_name': invoice.partner_id.name,
+            }
+            self.env['mail.template'].sudo().browse(email_template.id).with_context(email_context).send_mail(self.id)
+        if reminder_type == 'after':
+            email_template = self.env.ref('accounting_workflow.email_template_future_payment_reminder_after')
+            email_template.email_to = invoice.partner_id.email
+
+            email_context = {
+                'due_date': due_date,
+                'amount': amount,
+                'invoice_number': invoice.name,
+                'partner_name': invoice.partner_id.name,
+            }
+            self.env['mail.template'].sudo().browse(email_template.id).with_context(email_context).send_mail(self.id)
