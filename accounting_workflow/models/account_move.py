@@ -5,7 +5,8 @@ import base64
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    payment_reminder_days = fields.Integer('Payment Reminder Days', default=5, required=1)
+    payment_reminder_days_before = fields.Integer('Payment Reminder Days Before', default=5, required=1)
+    payment_reminder_days_after = fields.Integer('Payment Reminder Days After', default=5, required=1)
 
     def customer_invoice_notification(self):
         template = self.env.ref('accounting_workflow.email_template_invoice_notification')
@@ -92,8 +93,8 @@ class AccountMove(models.Model):
              ('amount_residual', '!=', 0)])
         for rec in invoices:
             for line in rec.line_ids:
-                reminder_before_days = line.date_maturity.days - fields.Date.today().day
-                if reminder_before_days == rec.payment_reminder_days and not line.reconciled:
+                reminder_days = line.date_maturity.days - fields.Date.today().day
+                if reminder_days == rec.payment_reminder_days_before and not line.reconciled:
                     self.send_payment_reminder_to_customer(rec, line.date_maturity,
                                                            line.amount_currency)
 
