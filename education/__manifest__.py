@@ -52,7 +52,8 @@
         'product_bundle_pack',
         'sale_coupon',
         'im_livechat',
-        'event_sale'
+        'event_sale',
+        'account_reports'
     ],
     'data': [
         'security/groups.xml',
