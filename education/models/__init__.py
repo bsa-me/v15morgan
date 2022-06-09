@@ -89,3 +89,4 @@ from . import livechat
 from . import instructor_evaluation
 from . import mail_activity
 from . import ir_asset
+from . import account_aged_partner_balance
