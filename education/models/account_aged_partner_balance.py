@@ -59,7 +59,6 @@ class ReportAccountAgedPartner(models.AbstractModel):
             )
             WHERE account.internal_type = %(account_type)s
             AND account.exclude_from_aged_reports IS NOT TRUE
-            AND move_name = 'SIROF-8069'
             GROUP BY account_move_line.id, partner.id, trust_property.id, journal.id, move.id, account.id,
                      period_table.period_index, currency_table.rate, currency_table.precision
             HAVING ROUND(account_move_line.balance - COALESCE(SUM(part_debit.amount), 0) + COALESCE(SUM(part_credit.amount), 0), currency_table.precision) != 0
