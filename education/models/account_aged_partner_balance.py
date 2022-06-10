@@ -21,6 +21,7 @@ class ReportAccountAgedPartner(models.AbstractModel):
                 move.move_type AS move_type,
                 move.name AS move_name,
                 move.ref AS move_ref,
+                journal.name AS journal_name,
                 account.code || ' ' || account.name AS account_name,
                 account.code AS account_code,""" + ','.join([("""
                 CASE WHEN period_table.period_index = {i}
@@ -59,6 +60,7 @@ class ReportAccountAgedPartner(models.AbstractModel):
             )
             WHERE account.internal_type = %(account_type)s
             AND account.exclude_from_aged_reports IS NOT TRUE
+            AND journal_name = 'Customer Invoices'
             GROUP BY account_move_line.id, partner.id, trust_property.id, journal.id, move.id, account.id,
                      period_table.period_index, currency_table.rate, currency_table.precision
             HAVING ROUND(account_move_line.balance - COALESCE(SUM(part_debit.amount), 0) + COALESCE(SUM(part_credit.amount), 0), currency_table.precision) != 0
