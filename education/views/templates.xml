@@ -1089,5 +1089,25 @@
             </div>
   </xpath>
         </template>
+
+<template id="filter_info_template" inherit_id="account_reports.filter_info_template">
+    <xpath expr="//div[@class='col-4']" position="replace">
+        <div class="col-4">
+            <t t-if="options.get('date') and options['date'].get('string')"><t t-esc="options['date']['string']"/></t>
+            <t t-if="not options.get('multi_company')">
+                <br/><t t-esc="report.get('company_name')"/>
+            </t>
+            <t t-if="options.get('multi_company')">
+                <br/>Companies:
+              <!--  <t t-set="company_value">All</t>
+                <t t-foreach="options['multi_company']" t-as="c">
+                    <t t-set="company_value" t-value="''"/>
+                    <t t-esc="c.get('name')"/>
+                </t>
+                <t t-esc="company_value"/> -->
+            </t>
+        </div>
+  </xpath>
+        </template>
     
 </odoo>
