@@ -8,3 +8,4 @@ class AccountJournal(models.Model):
     bank_acc_number = fields.Char('Account Number')
     swift_code = fields.Char('Swift Code')
     iban = fields.Char('Iban')
+    
