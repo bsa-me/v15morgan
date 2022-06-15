@@ -30,7 +30,7 @@ class Attachment(models.Model):
             new_value = len(reader)
 
             self.is_processed = True
-            
+
 
         for i in range(count, new_value):
             lines = reader[i].split('\t')
@@ -55,14 +55,14 @@ class Attachment(models.Model):
                 payment_date = datetime.strptime(payment_date, "%m-%d-%Y")
                 vals['payment_date'] = payment_date
 
-                
+
                 if lines[4]:
                     date_cleared = lines[4]
                     date_cleared = date_cleared.replace("/", "-")
                     date_cleared = date_cleared[:-2] + "20" + date_cleared[-2:]
                     date_cleared = datetime.strptime(date_cleared, "%m-%d-%Y")
                     vals['date_cleared'] = date_cleared
-                
+
                 #vals['invoice_ids'] = [(6, 0, [invoice.id])]
 
                 invoice = self.env['account.move'].search([('name','=',lines[5]),('partner_id','=',partner.id)])
@@ -78,7 +78,7 @@ class Attachment(models.Model):
                 vals['company_id'] = company.id
 
 
-                
+
                 vals['payment_mode'] = payment_types.get(lines[6])
 
                 if vals['payment_mode'] == 'cash':
@@ -107,7 +107,7 @@ class Attachment(models.Model):
                     payment.action_draft()
                     payment.write(vals)
                     payment.post()
-                
+
                 else:
                     payment = self.env['account.payment'].search([('name','=',vals['name']),('from_mrm','=',True),('partner_id','=',vals['partner_id']),('state','!=','cancelled')])
                     if not payment:
@@ -160,7 +160,7 @@ class Attachment(models.Model):
             new_value = len(reader)
 
             self.is_processed = True
-            
+
 
         for i in range(count, new_value):
             lines = reader[i].split('\t')
@@ -194,7 +194,7 @@ class Attachment(models.Model):
             new_value = len(reader)
 
             self.is_processed = True
-            
+
 
         for i in range(count, new_value):
             lines = reader[i].split('\t')
@@ -216,7 +216,7 @@ class Attachment(models.Model):
             new_value = len(reader)
 
             self.is_processed = True
-            
+
 
         for i in range(count, new_value):
             lines = reader[i].split('\t')
@@ -236,7 +236,7 @@ class Attachment(models.Model):
             new_value = len(reader)
 
             self.is_processed = True
-            
+
 
         for i in range(count, new_value):
             lines = reader[i].split('\t')
@@ -259,7 +259,7 @@ class Attachment(models.Model):
             new_value = len(reader)
 
             self.is_processed = True
-            
+
 
         for i in range(count, new_value):
             lines = reader[i].split('\t')
@@ -321,7 +321,7 @@ class Attachment(models.Model):
             new_value = len(reader)
 
             self.is_processed = True
-            
+
 
         for i in range(count, new_value):
             lines = reader[i].split('\t')
@@ -346,14 +346,14 @@ class Attachment(models.Model):
                 payment_date = datetime.strptime(payment_date, "%m-%d-%Y")
                 vals['payment_date'] = payment_date
 
-                
+
                 if lines[4]:
                     date_cleared = lines[4]
                     date_cleared = date_cleared.replace("/", "-")
                     date_cleared = date_cleared[:-2] + "20" + date_cleared[-2:]
                     date_cleared = datetime.strptime(date_cleared, "%m-%d-%Y")
                     vals['date_cleared'] = date_cleared
-                
+
                 #vals['invoice_ids'] = [(6, 0, [invoice.id])]
 
                 invoice = self.env['account.move'].search([('name','=',lines[5]),('partner_id','=',partner.id)])
@@ -369,7 +369,7 @@ class Attachment(models.Model):
                 vals['company_id'] = company.id
 
 
-                
+
                 vals['payment_mode'] = payment_types.get(lines[6])
 
                 if vals['payment_mode'] == 'cash':
@@ -398,7 +398,7 @@ class Attachment(models.Model):
                     payment.action_draft()
                     payment.write(vals)
                     payment.post()
-                
+
                 else:
                     payment = self.env['account.payment'].search([('name','=',vals['name']),('from_mrm','=',True),('partner_id','=',vals['partner_id']),('state','!=','cancelled')])
                     if not payment:
@@ -450,7 +450,7 @@ class Attachment(models.Model):
         if new_value > len(reader):
             new_value = len(reader)
 
-            
+
 
             self.lines_processed = True
 
@@ -576,7 +576,7 @@ class Attachment(models.Model):
             contact_vals['zip'] = lines[17].strip()
             contact_vals['company_legal_name'] = lines[18].strip()
             contact_vals['vat'] = lines[19].strip()
-            
+
             if lines[20]:
                 education = self.env['education.level'].search([('name','=',lines[20].strip())])
                 if not education:
@@ -756,7 +756,29 @@ class Attachment(models.Model):
 
         self.write({'processed_rows_count': new_value})
 
-        
+
+    def assign_companies_countries(self):
+        objFile = str(base64.b64decode(self.datas).decode('UTF-8'))
+        reader = objFile.splitlines()
+
+        for row in reader:
+            lines = row.split('\t')
+
+            company = self.env.ref(str(lines[0]))
+            if lines[1]:
+                country_id = self.env['res.country'].search([('name', '=', str(lines[1]))])
+                if country_id:
+                    if len(country_id) > 0:
+                        raise UserError("Multiple results for country "+str(lines[1]))
+                else:
+                    raise UserError(lines[1] + " this country does not exist")
+            if company:
+                company.write({
+                    'country_id': country_id.id,
+                })
+            else:
+                raise UserError("Company of ref "+str(lines[0]) + " does not exist")
+
 
 
 
