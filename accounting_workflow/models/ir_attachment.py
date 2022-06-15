@@ -34,10 +34,11 @@ class IrAttachment(models.Model):
         for row in reader:
             lines = row.split('\t')
             company = self.env.ref(str(lines[0]))
-            country_id = self.env['res.country'].search([('name', '=', str(lines[1]))])
+            country_id = self.env['res.country'].search([('name', '=', str(lines[1]))], limit=1)
 
-            self.env.cr.execute("UPDATE res_partner SET country_id = " + str(country_id.id) + " WHERE id = " + str(company.partner_id.id))
-            company._compute_address()
+            company.write({
+                'country_id': country_id.id,
+            })
 
 class IrActionsReport(models.Model):
     _inherit = 'ir.actions.report'
