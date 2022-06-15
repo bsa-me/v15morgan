@@ -38,3 +38,12 @@ class IrAttachment(models.Model):
 
             self.env.cr.execute("UPDATE res_partner SET country_id = " + str(country_id.id) + " WHERE id = " + str(company.partner_id.id))
             company._compute_address()
+
+class IrActionsReport(models.Model):
+    _name = 'ir.actions.report'
+
+    def _raise_on_unreadable_pdfs(self, streams, stream_record):
+        unreadable_pdfs = self._get_unreadable_pdfs(streams)
+        if unreadable_pdfs:
+            records = [stream_record[s].name for s in unreadable_pdfs if s in stream_record]
+            pass
