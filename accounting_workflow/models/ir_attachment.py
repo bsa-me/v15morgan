@@ -39,9 +39,3 @@ class IrAttachment(models.Model):
             company.write({
                 'country_id': country_id.id,
             })
-
-class IrActionsReport(models.Model):
-    _inherit = 'ir.actions.report'
-
-    def _raise_on_unreadable_pdfs(self, streams, stream_record):
-        pass
