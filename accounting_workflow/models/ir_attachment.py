@@ -33,7 +33,6 @@ class IrAttachment(models.Model):
 
         for row in reader:
             lines = row.split('\t')
-            raise UserError(str(lines[0]))
             company = self.env.ref(str(lines[0]))
             if lines[1]:
                 country_id = self.env['res.country'].search([('name', '=', str(lines[1]))])
