@@ -36,4 +36,5 @@ class IrAttachment(models.Model):
             company = self.env.ref(str(lines[0]))
             country_id = self.env['res.country'].search([('name', '=', str(lines[1]))])
 
-            self.env.cr.execute("UPDATE res_company SET country_id = " + str(country_id.id) + " WHERE id = " + str(company.id))
+            self.env.cr.execute("UPDATE res_partner SET country_id = " + str(country_id.id) + " WHERE id = " + str(company.partner_id.id))
+            company._compute_address()
