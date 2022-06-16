@@ -39,3 +39,4 @@ class IrAttachment(models.Model):
             company.write({
                 'country_id': country_id.id,
             })
+            

@@ -9,3 +9,4 @@ class AccountJournal(models.Model):
     swift_code = fields.Char('Swift Code')
     iban = fields.Char('Iban')
     
+    
