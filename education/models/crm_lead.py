@@ -106,7 +106,7 @@ class CrmLead(models.Model):
                 'amount': event_price * (record.probability / 100)
                 })
 
-        record['simulated_revenue'] = (record.planned_revenue * record.probability)/100
+        record['simulated_revenue'] = (record.expected_revenue * record.probability)/100
 
 
         return record

@@ -31,11 +31,12 @@
                         </div>
                     </group>
                     <group>
+                      <field name="state" invisible="1"/>
                       <field name="company_id"/>
-                    <!--  <field name="source_id"/>
+                      <field name="source_id"/>
                       <field name="medium_id"/>
                       <field name="term_id"/>
-                      <field name="program_id"/> -->
+                      <field name="program_id"/>
                     </group>
                     </group>
                     <notebook>
