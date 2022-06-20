@@ -25,6 +25,7 @@ class IrAttachment(models.Model):
         # prevent sha-1 collision
         if os.path.isfile(full_path) and not self._same_content(bin_data, full_path):
             raise UserError("path is: " + str(full_path))
+
         return fname, full_path
 
     def assign_companies_countries(self):
