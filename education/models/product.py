@@ -92,7 +92,7 @@ class ProductTemplate(models.Model):
                         regionPrice = self.env['company.price'].sudo().create({
                             'company_id': region.id,
                             #'tax_ids': [(6, False, [region.account_sale_tax_id.id])] if region.account_sale_tax_id else [(5, 0, 0)],
-                            'tax_ids': [(6, False, all_taxes.ids)],
+                            'tax_ids': [(6, False, all_taxes.ids)] if all_taxes else [(5, 0, 0)],
                             'product_tmpl_region_id': self.id,
                             'price': company_price.price,
                             })
@@ -101,7 +101,7 @@ class ProductTemplate(models.Model):
                         all_taxes =  company_taxes + region.account_sale_tax_id
                         regionPrice.sudo().write({
                             'company_id': region.id,
-                            'tax_ids': [(6, False, all_taxes.ids)],
+                            'tax_ids': [(6, False, all_taxes.ids)] if all_taxes else [(5, 0, 0)],
                             #'tax_ids': [(6, False, [region.account_sale_tax_id.id])] if region.account_sale_tax_id else [(5, 0, 0)],
                             'product_tmpl_region_id': self.id,
                             'price': company_price.price,
@@ -135,6 +135,13 @@ class ProductTemplate(models.Model):
 
                             else:
                                 pricelist_item.sudo().write({'fixed_price': item_vals['fixed_price']})
+
+
+        if self.region_prices:
+            product_taxes = self.region_prices.mapped('tax_ids').ids
+            if product_taxes:
+                for tax in product_taxes:
+                    self.write({'taxes_id': [(4, tax)]})
     
     @api.onchange('pack_ids')
     def _onchange_packs(self):
