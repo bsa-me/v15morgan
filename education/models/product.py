@@ -135,6 +135,7 @@ class ProductTemplate(models.Model):
 
         if self.region_prices:
             product_taxes = self.region_prices.mapped('tax_ids').ids
+            raise UserError(product_taxes)
             if product_taxes:
                 for tax in product_taxes:
                     self.write({'taxes_id': [(4, tax)]})
