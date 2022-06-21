@@ -97,6 +97,7 @@ class ProductTemplate(models.Model):
                             'price': company_price.price,
                             })
                     else:
+                        company_taxes = company_price.tax_ids
                         all_taxes =  company_taxes + region.account_sale_tax_id
                         regionPrice.sudo().write({
                             'company_id': region.id,
