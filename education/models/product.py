@@ -87,17 +87,19 @@ class ProductTemplate(models.Model):
                     #tax_ids = self.env['account.tax'].search([('company_id','=',region.id),('id','in',company_price.tax_ids.ids)])
 
                     if not regionPrice:
+                        company_taxes = company_price.tax_ids
+                        all_taxes =  company_taxes + region.account_sale_tax_id
                         regionPrice = self.env['company.price'].sudo().create({
                             'company_id': region.id,
                             #'tax_ids': [(6, False, [region.account_sale_tax_id.id])] if region.account_sale_tax_id else [(5, 0, 0)],
-                            'tax_ids': [(6, False, company_price.tax_ids.ids)] if company_price.tax_ids else [(5, 0, 0)],
+                            'tax_ids': [(6, False, all_taxes.ids)],
                             'product_tmpl_region_id': self.id,
                             'price': company_price.price,
                             })
                     else:
                         regionPrice.sudo().write({
                             'company_id': region.id,
-                            'tax_ids': [(6, False, company_price.tax_ids.ids)] if company_price.tax_ids else [(5, 0, 0)],
+                            'tax_ids': [(6, False, all_taxes.ids)],
                             #'tax_ids': [(6, False, [region.account_sale_tax_id.id])] if region.account_sale_tax_id else [(5, 0, 0)],
                             'product_tmpl_region_id': self.id,
                             'price': company_price.price,
@@ -131,14 +133,6 @@ class ProductTemplate(models.Model):
 
                             else:
                                 pricelist_item.sudo().write({'fixed_price': item_vals['fixed_price']})
-
-
-        if self.region_prices:
-            product_taxes = self.region_prices.mapped('tax_ids').ids
-            raise UserError(product_taxes)
-            if product_taxes:
-                for tax in product_taxes:
-                    self.write({'taxes_id': [(4, tax)]})
     
     @api.onchange('pack_ids')
     def _onchange_packs(self):
